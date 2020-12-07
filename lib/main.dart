@@ -44,37 +44,52 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _views = [
+    Text(
+      "1",
+      style: TextStyle(color: Colors.white),
+    ),
+    Text("2", style: TextStyle(color: Colors.white)),
+    Text("3", style: TextStyle(color: Colors.white))
+  ];
+  int _currentIndex = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.all(5.0),
-        decoration: BoxDecoration(
-            color: Color.fromARGB(255, 23, 19, 31).withOpacity(0.5) ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              icon: Icon(OMIcons.image,color: Colors.white,),
-              onPressed: () {},
-              iconSize: 40.0,
-            ),IconButton(
-              icon: Icon(OMIcons.image,color: Colors.white),
-              onPressed: () {},
-              iconSize: 40.0,
-            ),IconButton(
-              icon: Icon(OMIcons.image,color: Colors.white),
-              onPressed: () {},
-              iconSize: 40.0,
-            )
-          ],
+        bottomNavigationBar: Container(
+          padding: EdgeInsets.symmetric(vertical: 7.0, horizontal: 5.0),
+          decoration: BoxDecoration(
+              color: Color.fromARGB(255, 23, 19, 31).withOpacity(0.5)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                icon: Icon(OMIcons.addBox,
+                    color: _currentIndex == 0 ? Colors.white : Colors.white30),
+                onPressed: () => setState(() => _updateIndex(0)),
+                iconSize: 35.0,
+              ),
+              IconButton(
+                icon: Icon(
+                  OMIcons.image,
+                  color: _currentIndex == 1 ? Colors.white : Colors.white30,
+                ),
+                onPressed: () => setState(() => _updateIndex(1)),
+                iconSize: 35.0,
+              ),
+              IconButton(
+                icon: Icon(OMIcons.favoriteBorder,
+                    color: _currentIndex == 2 ? Colors.white : Colors.white30),
+                onPressed: () => setState(() => _updateIndex(2)),
+                iconSize: 35.0,
+              )
+            ],
+          ),
         ),
-      ),
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: Text(
-        "XD",
-        style: Theme.of(context).textTheme.headline1,
-      ),
-    );
+        backgroundColor: Theme.of(context).backgroundColor,
+        body: SafeArea(child: Center(child: _views.elementAt(_currentIndex))));
   }
+
+  void _updateIndex(int index) => _currentIndex = index;
 }
