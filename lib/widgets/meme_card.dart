@@ -8,7 +8,7 @@ class MemeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom;
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20,vertical: 30),
+      margin: EdgeInsets.symmetric(vertical: 25.0),
       height: screenHeight/2.2 ,
       width: double.infinity,
       child: Stack(
