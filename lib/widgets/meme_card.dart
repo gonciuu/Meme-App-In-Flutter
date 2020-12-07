@@ -16,7 +16,7 @@ class MemeCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(20.0),
             child: Image.network(
-              'https://media.sproutsocial.com/uploads/meme-example.jpg',
+              'https://thepsychologist.bps.org.uk/sites/thepsychologist.bps.org.uk/files/img_9685.jpg',
               fit: BoxFit.fill,
               width: double.infinity,
               height:  screenHeight/2.5,
@@ -25,15 +25,23 @@ class MemeCard extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              width: 70,
-              height:  screenHeight/10,
+              width: MediaQuery.of(context).size.width/3,
+              padding: EdgeInsets.fromLTRB(30,5,20,5),
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor.withOpacity(0.95),
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(100.0),
               ),
-              child: IconButton(
-                icon: Icon(OMIcons.favoriteBorder,size: 40.0,color: Colors.white,),
-                onPressed: () {},
+              child: FittedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("222",style: Theme.of(context).textTheme.headline3.copyWith(fontSize: 18.0),),
+                    IconButton(
+                      icon: Icon(OMIcons.favoriteBorder,size: 32.0,color: Colors.white,),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
               ),
             ),
           )

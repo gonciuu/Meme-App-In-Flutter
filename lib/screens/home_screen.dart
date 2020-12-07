@@ -15,8 +15,8 @@ class HomeScreen extends StatelessWidget {
             SizedBox(height: 25,),
             Row(children: [
               IconButton(
-                icon : Icon(OMIcons.dehaze,size: 32,color: Colors.white,),
-                onPressed: (){},
+                icon : Icon(OMIcons.menu,size: 32,color: Colors.white,),
+                onPressed: () => Scaffold.of(context).openDrawer(),
               ),
               Spacer(),
               Container(
@@ -38,10 +38,23 @@ class HomeScreen extends StatelessWidget {
                 icon: Icon(OMIcons.search,size: 32,color: Colors.white), onPressed: () { },
               )
             ],),
-            SizedBox(height: 30,),
-            Text(
-              "Popular Memes",
-              style: Theme.of(context).textTheme.headline1.copyWith(fontSize: 32),
+            SizedBox(height: 40,),
+            Row(
+              children: [
+                Text(
+                  "Popular Memes",
+                  style: Theme.of(context).textTheme.headline1.copyWith(fontSize: 32),
+                ),Spacer(),
+                PopupMenuButton(
+                  icon: Icon(OMIcons.filterList,size: 30,color: Colors.white,), itemBuilder: (BuildContext context) =>[
+                    PopupMenuItem(child: Text("XD"),),
+                    PopupMenuItem(child: Text("XD"),),
+                    PopupMenuItem(child: Text("XD"),),
+                    PopupMenuItem(child: Text("XD"),),
+                    PopupMenuItem(child: Text("XD"),),
+                ],
+                )
+              ],
             ),
             SizedBox(height: 10,),
             ListView.builder(itemBuilder: (context,index)=>MemeCard(),itemCount: 5,scrollDirection: Axis.vertical,

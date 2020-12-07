@@ -55,6 +55,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(),
+        drawerEnableOpenDragGesture: true,
         bottomNavigationBar: Container(
           padding: EdgeInsets.symmetric(vertical: 7.0, horizontal: 5.0),
           decoration: BoxDecoration(
