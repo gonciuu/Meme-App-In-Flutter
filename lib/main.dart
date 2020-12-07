@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import './screens/home_screen.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 
 void main() {
@@ -45,10 +46,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _views = [
-    Text(
-      "1",
-      style: TextStyle(color: Colors.white),
-    ),
+    HomeScreen(),
     Text("2", style: TextStyle(color: Colors.white)),
     Text("3", style: TextStyle(color: Colors.white))
   ];
@@ -68,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                 icon: Icon(OMIcons.addBox,
                     color: _currentIndex == 0 ? Colors.white : Colors.white30),
                 onPressed: () => setState(() => _updateIndex(0)),
-                iconSize: 35.0,
+                iconSize: 32.0,
               ),
               IconButton(
                 icon: Icon(
@@ -76,19 +74,19 @@ class _HomePageState extends State<HomePage> {
                   color: _currentIndex == 1 ? Colors.white : Colors.white30,
                 ),
                 onPressed: () => setState(() => _updateIndex(1)),
-                iconSize: 35.0,
+                iconSize: 32.0,
               ),
               IconButton(
                 icon: Icon(OMIcons.favoriteBorder,
                     color: _currentIndex == 2 ? Colors.white : Colors.white30),
                 onPressed: () => setState(() => _updateIndex(2)),
-                iconSize: 35.0,
+                iconSize: 32.0,
               )
             ],
           ),
         ),
         backgroundColor: Theme.of(context).backgroundColor,
-        body: SafeArea(child: Center(child: _views.elementAt(_currentIndex))));
+        body: SafeArea(child: _views.elementAt(_currentIndex)));
   }
 
   void _updateIndex(int index) => _currentIndex = index;

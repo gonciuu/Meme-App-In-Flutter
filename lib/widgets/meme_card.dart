@@ -1,0 +1,44 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:outline_material_icons/outline_material_icons.dart';
+
+class MemeCard extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom;
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20,vertical: 30),
+      height: screenHeight/2.2 ,
+      width: double.infinity,
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: Image.network(
+              'https://media.sproutsocial.com/uploads/meme-example.jpg',
+              fit: BoxFit.fill,
+              width: double.infinity,
+              height:  screenHeight/2.5,
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              width: 70,
+              height:  screenHeight/10,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor.withOpacity(0.95),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: IconButton(
+                icon: Icon(OMIcons.favoriteBorder,size: 40.0,color: Colors.white,),
+                onPressed: () {},
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
