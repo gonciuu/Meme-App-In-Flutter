@@ -8,7 +8,7 @@ class MemeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom;
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 25.0),
+      margin: EdgeInsets.symmetric(vertical: 20.0),
       height: screenHeight/2.2 ,
       width: double.infinity,
       child: Stack(
@@ -25,24 +25,14 @@ class MemeCard extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              width: MediaQuery.of(context).size.width/3,
-              padding: EdgeInsets.fromLTRB(30,5,20,5),
+              width: 70,
+              height: 70,
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor.withOpacity(0.95),
+                color: Theme.of(context).primaryColor.withOpacity(1),
                 borderRadius: BorderRadius.circular(100.0),
               ),
-              child: FittedBox(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("222",style: Theme.of(context).textTheme.headline3.copyWith(fontSize: 18.0),),
-                    IconButton(
-                      icon: Icon(OMIcons.favoriteBorder,size: 32.0,color: Colors.white,),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-              ),
+              child: Icon(
+               OMIcons.favoriteBorder,size: 32.0,color: Colors.white,),
             ),
           )
         ],
