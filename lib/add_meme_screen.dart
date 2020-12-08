@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import './meme_text.dart';
 import './consts.dart';
 
 class AddMemeScreen extends StatefulWidget {
@@ -10,19 +9,8 @@ class AddMemeScreen extends StatefulWidget {
 }
 
 class _AddMemeScreenState extends State<AddMemeScreen> {
-  Map<String,dynamic> t1 = {
-    "text":"",
-    "maxFontSize":40,
-    "align": TextAlign.center,
-    "weight":"700",
-    "color":Colors.grey[900]
-  };
-
-  Map<String,dynamic> t2 = {
-
-
-  };
-
+  MemeText t1 = MemeText();
+  MemeText t2 = MemeText();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -47,7 +35,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                       padding:
                           const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                       child: AutoSizeText(
-                        t1,
+                        t1.text,
                         textAlign: TextAlign.center,
                         maxLines: 3,
                         style: TextStyle(color: Colors.grey[900], fontSize: 36),
@@ -59,7 +47,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                       child: AutoSizeText(
-                        t2,
+                        t2.text,
                         textAlign: TextAlign.center,
                         maxLines: 3,
                         style: TextStyle(color: Colors.grey[900], fontSize: 36),
@@ -87,7 +75,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                   enabledBorder: border.copyWith(
                       borderSide: BorderSide(color: Colors.grey[600]))),
               style: Theme.of(context).textTheme.headline6,
-              onChanged: (val) => setState(() => t1 = val),
+              onChanged: (val) => setState(() => t1.text = val),
             ),
             const SizedBox(
               height: 20,
@@ -106,7 +94,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                   enabledBorder: border.copyWith(
                       borderSide: BorderSide(color: Colors.grey[600]))),
               style: Theme.of(context).textTheme.headline6,
-              onChanged: (val) => setState(() => t2 = val),
+              onChanged: (val) => setState(() => t2.text = val),
             ),
             Spacer(),
             Container(
