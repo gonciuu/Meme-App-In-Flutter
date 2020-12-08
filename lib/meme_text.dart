@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class MemeText {
   String text;
+  String fontFamily;
   FontWeight weight;
   TextAlign align;
   Color color;
@@ -12,5 +13,6 @@ class MemeText {
       this.align = TextAlign.center,
       this.color = Colors.grey,
       this.maxFontSize = 40,
-      this.weight = FontWeight.w700});
+      this.fontFamily = 'Lato',
+      this.weight = FontWeight.w500});
 }

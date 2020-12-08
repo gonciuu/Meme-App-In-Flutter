@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import './meme_text.dart';
 import './consts.dart';
 
@@ -13,12 +14,6 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   MemeText t2 = MemeText();
 
   int _chosenWeightButton = 0;
-
-  final listOfFontFamilies = const [
-    'Lato',
-    'Coda',
-    'Poppins',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +56,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                           style: TextStyle(
                               color: Colors.grey[900],
                               fontSize: 36,
-                              fontWeight: t1.weight),
+                              fontWeight: t1.weight,
+                              fontFamily: t1.fontFamily),
                         ),
                       ),
                       alignment: Alignment.topCenter,
@@ -77,7 +73,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                           style: TextStyle(
                               color: Colors.grey[900],
                               fontSize: 36,
-                              fontWeight: t2.weight),
+                              fontWeight: t2.weight,
+                              fontFamily: t2.fontFamily),
                         ),
                       ),
                       alignment: Alignment.bottomCenter,
@@ -168,9 +165,45 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
               SizedBox(
                 height: 10,
               ),
-              PopupMenuButton(
-                itemBuilder: [PopupMenuItem(child: Text("XD"))],
-                child: Icon(Icons.list,),
+              DropdownButtonHideUnderline(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 7),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.white,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: DropdownButton<String>(
+                    items: [
+                      DropdownMenuItem(
+                        child: Text("Lato"),
+                        value: 'Lato',
+                      ),
+                      DropdownMenuItem(
+                        child: Text("Poppins"),
+                        value: 'Poppins',
+                      ),
+                      DropdownMenuItem(
+                        child: Text("Coda"),
+                        value: 'Coda',
+                      )
+                    ],
+                    onChanged: (value) {
+                      _setFamily(value);
+                    },
+                    value: t1.fontFamily,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3
+                        .copyWith(fontSize: 18),
+                    dropdownColor: Theme.of(context).primaryColor,
+                    iconEnabledColor: Colors.white,
+                    iconDisabledColor: Colors.white,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
               ),
               Container(
                 width: double.infinity,
@@ -201,6 +234,13 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
       t1.weight = weight;
       t2.weight = weight;
       _chosenWeightButton = chosen;
+    });
+  }
+
+  void _setFamily(String fontFamily) {
+    setState(() {
+      t1.fontFamily = fontFamily;
+      t2.fontFamily = fontFamily;
     });
   }
 
