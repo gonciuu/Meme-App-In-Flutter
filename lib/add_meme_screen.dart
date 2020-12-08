@@ -14,25 +14,41 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
 
   int _chosenWeightButton = 0;
 
+  final listOfFontFamilies = const [
+    'Lato',
+    'Coda',
+    'Poppins',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
         child: Form(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text(
+                "Create Meme",
+                style: Theme.of(context).textTheme.headline2,
+              ),
+              SizedBox(
+                height: 20,
+              ),
               Container(
                 width: double.infinity,
                 height: 300,
                 child: Stack(
                   children: [
-                    Image.network(
-                      'https://bingoland.pl/userdata/public/gfx/2652/tlo-fotograficzne-biale.jpg',
-                      width: double.infinity,
-                      fit: BoxFit.fill,
-                      height: 300,
+                    ClipRRect(
+                      child: Image.network(
+                        'https://bingoland.pl/userdata/public/gfx/2652/tlo-fotograficzne-biale.jpg',
+                        width: double.infinity,
+                        fit: BoxFit.fill,
+                        height: 300,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     Align(
                       child: Padding(
@@ -142,6 +158,20 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Font Family",
+                style: Theme.of(context).textTheme.headline3,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              PopupMenuButton(
+                itemBuilder: [PopupMenuItem(child: Text("XD"))],
+                child: Icon(Icons.list,),
+              ),
               Container(
                 width: double.infinity,
                 child: FlatButton(
@@ -183,14 +213,14 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
             maxLines: 1,
             maxFontSize: 18,
             style: Theme.of(context).textTheme.headline3.copyWith(
-                color: actual != _chosenWeightButton
+                color: actual == _chosenWeightButton
                     ? Theme.of(context).primaryColor
                     : Colors.white),
           ),
           onPressed: handler,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          color: actual != _chosenWeightButton
+          color: actual == _chosenWeightButton
               ? Colors.white
               : Theme.of(context).primaryColor,
         ),
