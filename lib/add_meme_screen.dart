@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import './meme_text.dart';
 import './consts.dart';
 
@@ -15,7 +16,10 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   MemeText t1 = MemeText();
   MemeText t2 = MemeText();
 
-  int _chosenWeightButton = 0;
+  int _chosenWeightButton = 1;
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +63,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                             maxLines: 3,
                             softWrap: true,
                             style: TextStyle(
-                                color: Colors.grey[900],
+                                color: t1.color,
                                 fontSize: 36,
                                 fontWeight: t1.weight,
                                 fontFamily: t1.fontFamily),
@@ -80,7 +84,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                             maxLines: 3,
                             softWrap: true,
                             style: TextStyle(
-                                color: Colors.grey[900],
+                                color: t2.color,
                                 fontSize: 36,
                                 fontWeight: t2.weight,
                                 fontFamily: t2.fontFamily),
@@ -129,6 +133,53 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                         borderSide: BorderSide(color: Colors.grey[600]))),
                 style: Theme.of(context).textTheme.headline6,
                 onChanged: (val) => setState(() => t2.text = val),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                "Text Color\n(click to change)",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline3,
+              ),SizedBox(
+                height: 10,
+              ),
+              InkWell(
+                child: Container(
+                  width: 70,
+                  height: 70,
+                  color: t1.color,
+                ),
+                onTap: (){
+                  showDialog(
+                    context: context,
+                    child: AlertDialog(
+                      titleTextStyle: Theme.of(context).textTheme.headline3.copyWith(fontSize: 16.0),
+                      backgroundColor: Theme.of(context).primaryColor,
+                      title: const Text('Pick a color!'),
+                      content: SingleChildScrollView(
+                        child: ColorPicker(
+                          pickerColor: t1.color,
+                          onColorChanged: changeColor,
+                          showLabel: false,
+                          pickerAreaHeightPercent: 1,
+                        ),
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text('Choose',style: Theme.of(context).textTheme.headline3.copyWith(fontSize: 16),),
+                          onPressed: () {
+                            setState(() {
+                              t1.color = _pickerColor;
+                              t2.color = _pickerColor;
+                            });
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
               SizedBox(
                 height: 30,
@@ -372,6 +423,12 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
       default:
         return "center";
     }
+  }
+
+
+  Color _pickerColor = Color(0xff98FF54);
+  void changeColor(Color color) {
+    setState(() => _pickerColor = color);
   }
 
   Widget _getFontWeightButton(String title, Function handler, int actual) =>

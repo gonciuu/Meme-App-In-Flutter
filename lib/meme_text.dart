@@ -11,7 +11,7 @@ class MemeText {
   MemeText(
       {this.text = "",
       this.align = TextAlign.center,
-      this.color = Colors.grey,
+      this.color = const Color(0xff343434),
       this.maxFontSize = 40,
       this.fontFamily = 'Lato',
       this.weight = FontWeight.w500});
