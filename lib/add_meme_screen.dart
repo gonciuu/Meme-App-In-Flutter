@@ -12,6 +12,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   MemeText t1 = MemeText();
   MemeText t2 = MemeText();
 
+  int _chosenWeightButton = 0;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -40,8 +42,10 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                           t1.text,
                           textAlign: TextAlign.center,
                           maxLines: 3,
-                          style:
-                              TextStyle(color: Colors.grey[900], fontSize: 36),
+                          style: TextStyle(
+                              color: Colors.grey[900],
+                              fontSize: 36,
+                              fontWeight: t1.weight),
                         ),
                       ),
                       alignment: Alignment.topCenter,
@@ -54,8 +58,10 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                           t2.text,
                           textAlign: TextAlign.center,
                           maxLines: 3,
-                          style:
-                              TextStyle(color: Colors.grey[900], fontSize: 36),
+                          style: TextStyle(
+                              color: Colors.grey[900],
+                              fontSize: 36,
+                              fontWeight: t2.weight),
                         ),
                       ),
                       alignment: Alignment.bottomCenter,
@@ -116,15 +122,21 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                   SizedBox(
                     width: 10,
                   ),
-                  _getFontWeightButton("Bold",(){}),
+                  _getFontWeightButton("Bold", () {
+                    _setWeight(FontWeight.w900, 0);
+                  }, 0),
                   SizedBox(
                     width: 20,
                   ),
-                  _getFontWeightButton("Normal",(){}),
+                  _getFontWeightButton("Normal", () {
+                    _setWeight(FontWeight.w500, 1);
+                  }, 1),
                   SizedBox(
                     width: 20,
                   ),
-                  _getFontWeightButton("Light",(){}),
+                  _getFontWeightButton("Light", () {
+                    _setWeight(FontWeight.w300, 2);
+                  }, 2),
                   SizedBox(
                     width: 10,
                   ),
@@ -154,23 +166,33 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
     );
   }
 
+  void _setWeight(FontWeight weight, int chosen) {
+    setState(() {
+      t1.weight = weight;
+      t2.weight = weight;
+      _chosenWeightButton = chosen;
+    });
+  }
 
-  Widget _getFontWeightButton(String title, Function handler) => Expanded(
-    child: FlatButton(
-      padding: EdgeInsets.symmetric(vertical: 15),
-      child: AutoSizeText(
-        title,
-        maxLines: 1,
-        maxFontSize: 18,
-        style: Theme.of(context)
-            .textTheme
-            .headline3
-            .copyWith(color: Theme.of(context).primaryColor),
-      ),
-      onPressed: handler,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0)),
-      color: Colors.white,
-    ),
-  );
+  Widget _getFontWeightButton(String title, Function handler, int actual) =>
+      Expanded(
+        child: FlatButton(
+          padding: EdgeInsets.symmetric(vertical: 15),
+          child: AutoSizeText(
+            title,
+            maxLines: 1,
+            maxFontSize: 18,
+            style: Theme.of(context).textTheme.headline3.copyWith(
+                color: actual != _chosenWeightButton
+                    ? Theme.of(context).primaryColor
+                    : Colors.white),
+          ),
+          onPressed: handler,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          color: actual != _chosenWeightButton
+              ? Colors.white
+              : Theme.of(context).primaryColor,
+        ),
+      );
 }
