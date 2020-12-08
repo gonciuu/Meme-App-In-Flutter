@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:memix/add_meme_screen.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 
 void main() {
@@ -26,6 +27,10 @@ class MyApp extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: Colors.white),
+            headline6: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: Colors.white),
               ),
           backgroundColor: Color.fromARGB(255, 43, 39, 51),
           fontFamily: 'Lato',
@@ -49,7 +54,7 @@ class _HomePageState extends State<HomePage> {
       "1",
       style: TextStyle(color: Colors.white),
     ),
-    Text("2", style: TextStyle(color: Colors.white)),
+   AddMemeScreen(),
     Text("3", style: TextStyle(color: Colors.white))
   ];
   int _currentIndex = 1;
