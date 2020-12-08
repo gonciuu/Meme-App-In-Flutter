@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import './meme_text.dart';
 import './consts.dart';
 
@@ -49,15 +51,19 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
-                        child: AutoSizeText(
-                          t1.text,
-                          textAlign: TextAlign.center,
-                          maxLines: 3,
-                          style: TextStyle(
-                              color: Colors.grey[900],
-                              fontSize: 36,
-                              fontWeight: t1.weight,
-                              fontFamily: t1.fontFamily),
+                        child: Container(
+                          width: double.infinity,
+                          child: AutoSizeText(
+                            t1.text,
+                            textAlign: t1.align,
+                            maxLines: 3,
+                            softWrap: true,
+                            style: TextStyle(
+                                color: Colors.grey[900],
+                                fontSize: 36,
+                                fontWeight: t1.weight,
+                                fontFamily: t1.fontFamily),
+                          ),
                         ),
                       ),
                       alignment: Alignment.topCenter,
@@ -66,15 +72,19 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
-                        child: AutoSizeText(
-                          t2.text,
-                          textAlign: TextAlign.center,
-                          maxLines: 3,
-                          style: TextStyle(
-                              color: Colors.grey[900],
-                              fontSize: 36,
-                              fontWeight: t2.weight,
-                              fontFamily: t2.fontFamily),
+                        child: Container(
+                          width: double.infinity,
+                          child: AutoSizeText(
+                            t2.text,
+                            textAlign: t2.align,
+                            maxLines: 3,
+                            softWrap: true,
+                            style: TextStyle(
+                                color: Colors.grey[900],
+                                fontSize: 36,
+                                fontWeight: t2.weight,
+                                fontFamily: t2.fontFamily),
+                          ),
                         ),
                       ),
                       alignment: Alignment.bottomCenter,
@@ -121,7 +131,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                 onChanged: (val) => setState(() => t2.text = val),
               ),
               SizedBox(
-                height: 20,
+                height: 30,
               ),
               Text(
                 "Text Style",
@@ -156,51 +166,133 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                 ],
               ),
               SizedBox(
-                height: 20,
+                height: 30,
               ),
-              Text(
-                "Font Family",
-                style: Theme.of(context).textTheme.headline3,
+              Row(
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: Text(
+                      "Font Family",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline3,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: Text(
+                      "Text Align",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline3,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                ],
               ),
               SizedBox(
                 height: 10,
               ),
-              DropdownButtonHideUnderline(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 7),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.white,
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: DropdownButton<String>(
-                    items: [
-                      DropdownMenuItem(
-                        child: Text("Lato"),
-                        value: 'Lato',
-                      ),
-                      DropdownMenuItem(
-                        child: Text("Poppins"),
-                        value: 'Poppins',
-                      ),
-                      DropdownMenuItem(
-                        child: Text("Coda"),
-                        value: 'Coda',
-                      )
-                    ],
-                    onChanged: (value) {
-                      _setFamily(value);
-                    },
-                    value: t1.fontFamily,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline3
-                        .copyWith(fontSize: 18),
-                    dropdownColor: Theme.of(context).primaryColor,
-                    iconEnabledColor: Colors.white,
-                    iconDisabledColor: Colors.white,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: 10,
                   ),
-                ),
+                  Expanded(
+                    child: DropdownButtonHideUnderline(
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 30, vertical: 7),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white,
+                            ),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: DropdownButton<String>(
+                          items: [
+                            DropdownMenuItem(
+                              child: Text("Lato"),
+                              value: 'Lato',
+                            ),
+                            DropdownMenuItem(
+                              child: Text("Poppins"),
+                              value: 'Poppins',
+                            ),
+                            DropdownMenuItem(
+                              child: Text("Coda"),
+                              value: 'Coda',
+                            )
+                          ],
+                          onChanged: (value) {
+                            _setFamily(value);
+                          },
+                          value: t1.fontFamily,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3
+                              .copyWith(fontSize: 18),
+                          dropdownColor: Theme.of(context).primaryColor,
+                          iconEnabledColor: Colors.white,
+                          iconDisabledColor: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: DropdownButtonHideUnderline(
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 30, vertical: 7),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white,
+                            ),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: DropdownButton<String>(
+                          items: [
+                            DropdownMenuItem(
+                              child: Text("Center"),
+                              value: 'center',
+                            ),
+                            DropdownMenuItem(
+                              child: Text("Left"),
+                              value: 'left',
+                            ),
+                            DropdownMenuItem(
+                              child: Text("Right"),
+                              value: 'right',
+                            )
+                          ],
+                          onChanged: (value) {
+                            _setTextAlign(value);
+                          },
+                          value: _textAlignName,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3
+                              .copyWith(fontSize: 18),
+                          dropdownColor: Theme.of(context).primaryColor,
+                          iconEnabledColor: Colors.white,
+                          iconDisabledColor: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                ],
               ),
               SizedBox(
                 height: 20,
@@ -242,6 +334,44 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
       t1.fontFamily = fontFamily;
       t2.fontFamily = fontFamily;
     });
+  }
+
+  void _setTextAlign(String textAlign) {
+    setState(() {
+      switch (textAlign) {
+        case 'left':
+          _setAlignOnText(TextAlign.left);
+          break;
+        case 'right':
+          _setAlignOnText(TextAlign.right);
+          break;
+        case 'center':
+          _setAlignOnText(TextAlign.center);
+          break;
+        default:
+          _setAlignOnText(TextAlign.center);
+      }
+    });
+  }
+
+  void _setAlignOnText(TextAlign align) {
+    setState(() {
+      t1.align = align;
+      t2.align = align;
+    });
+  }
+
+  String get _textAlignName {
+    switch (t1.align) {
+      case TextAlign.center:
+        return "center";
+      case TextAlign.left:
+        return "left";
+      case TextAlign.right:
+        return "right";
+      default:
+        return "center";
+    }
   }
 
   Widget _getFontWeightButton(String title, Function handler, int actual) =>
