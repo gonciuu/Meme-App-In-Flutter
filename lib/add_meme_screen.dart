@@ -17,6 +17,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   MemeText t2 = MemeText();
 
   int _chosenWeightButton = 1;
+  Color _pickerColor = Color(0xff98FF54);
 
   @override
   Widget build(BuildContext context) {
@@ -284,11 +285,13 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                   SizedBox(
                     width: 10,
                   ),
-                  _getDropdown('Lato', 'Poppins', 'Coda', _setFamily, t1.fontFamily),
+                  _getDropdown(
+                      'Lato', 'Poppins', 'Coda', _setFamily, t1.fontFamily),
                   SizedBox(
                     width: 20,
                   ),
-                  _getDropdown('left', 'center', 'right', _setTextAlign,_textAlignName),
+                  _getDropdown(
+                      'left', 'center', 'right', _setTextAlign, _textAlignName),
                   SizedBox(
                     width: 10,
                   ),
@@ -321,6 +324,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
     );
   }
 
+  //----------------- set weight of text -----------------
   void _setWeight(FontWeight weight, int chosen) {
     setState(() {
       t1.weight = weight;
@@ -329,6 +333,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
     });
   }
 
+  //----------------- set font family of text -----------------
   void _setFamily(String fontFamily) {
     setState(() {
       t1.fontFamily = fontFamily;
@@ -336,6 +341,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
     });
   }
 
+  //----------------- set text align from string -----------------
   void _setTextAlign(String textAlign) {
     setState(() {
       switch (textAlign) {
@@ -361,6 +367,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
     });
   }
 
+  //----------------- set max text size -----------------
   void _setMaxTextSize(double size) {
     setState(() {
       t1.maxFontSize = size;
@@ -368,6 +375,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
     });
   }
 
+  //----------------- get align name -----------------
   String get _textAlignName {
     switch (t1.align) {
       case TextAlign.center:
@@ -381,12 +389,10 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
     }
   }
 
-  Color _pickerColor = Color(0xff98FF54);
+  //handle color change in picker
+  void changeColor(Color color) => setState(() => _pickerColor = color);
 
-  void changeColor(Color color) {
-    setState(() => _pickerColor = color);
-  }
-
+  //----------------- get font weight button widget -----------------
   Widget _getFontWeightButton(String title, Function handler, int actual) =>
       Expanded(
         child: FlatButton(
@@ -409,7 +415,9 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
         ),
       );
 
-  Widget _getDropdown(String value1, String value2, String value3, Function handler,String actualValue) =>
+  //----------------- get dropdown widget -----------------
+  Widget _getDropdown(String value1, String value2, String value3,
+          Function handler, String actualValue) =>
       Expanded(
         child: DropdownButtonHideUnderline(
           child: Container(
