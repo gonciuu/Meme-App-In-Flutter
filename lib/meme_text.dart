@@ -6,7 +6,7 @@ class MemeText {
   FontWeight weight;
   TextAlign align;
   Color color;
-  int maxFontSize;
+  double maxFontSize;
 
   MemeText(
       {this.text = "",

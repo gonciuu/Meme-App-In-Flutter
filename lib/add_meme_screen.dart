@@ -64,7 +64,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                             softWrap: true,
                             style: TextStyle(
                                 color: t1.color,
-                                fontSize: 36,
+                                fontSize: t1.maxFontSize,
                                 fontWeight: t1.weight,
                                 fontFamily: t1.fontFamily),
                           ),
@@ -85,7 +85,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                             softWrap: true,
                             style: TextStyle(
                                 color: t2.color,
-                                fontSize: 36,
+                                fontSize: t2.maxFontSize,
                                 fontWeight: t2.weight,
                                 fontFamily: t2.fontFamily),
                           ),
@@ -180,7 +180,17 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                     ),
                   );
                 },
+              ),  SizedBox(
+                height: 30,
               ),
+              Text(
+                "Max Text Size",
+                style: Theme.of(context).textTheme.headline3,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Slider(value: t1.maxFontSize, max: 100, min: 10, onChanged: (val)=>_setMaxTextSize(val), activeColor: Colors.white, inactiveColor: Colors.white30,),
               SizedBox(
                 height: 30,
               ),
@@ -346,7 +356,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                 ],
               ),
               SizedBox(
-                height: 20,
+                height: 50,
               ),
               Container(
                 width: double.infinity,
@@ -409,6 +419,13 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
     setState(() {
       t1.align = align;
       t2.align = align;
+    });
+  }
+
+  void _setMaxTextSize(double size) {
+    setState(() {
+      t1.maxFontSize = size;
+      t2.maxFontSize = size;
     });
   }
 
