@@ -18,9 +18,6 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
 
   int _chosenWeightButton = 1;
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -145,7 +142,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                 "Text Color\n(click to change)",
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headline3,
-              ),SizedBox(
+              ),
+              SizedBox(
                 height: 10,
               ),
               InkWell(
@@ -154,11 +152,14 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                   height: 70,
                   color: t1.color,
                 ),
-                onTap: (){
+                onTap: () {
                   showDialog(
                     context: context,
                     child: AlertDialog(
-                      titleTextStyle: Theme.of(context).textTheme.headline3.copyWith(fontSize: 16.0),
+                      titleTextStyle: Theme.of(context)
+                          .textTheme
+                          .headline3
+                          .copyWith(fontSize: 16.0),
                       backgroundColor: Theme.of(context).primaryColor,
                       title: const Text('Pick a color!'),
                       content: SingleChildScrollView(
@@ -171,7 +172,13 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                       ),
                       actions: <Widget>[
                         FlatButton(
-                          child: Text('Choose',style: Theme.of(context).textTheme.headline3.copyWith(fontSize: 16),),
+                          child: Text(
+                            'Choose',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline3
+                                .copyWith(fontSize: 16),
+                          ),
                           onPressed: () {
                             setState(() {
                               t1.color = _pickerColor;
@@ -184,7 +191,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                     ),
                   );
                 },
-              ),  SizedBox(
+              ),
+              SizedBox(
                 height: 30,
               ),
               Text(
@@ -194,7 +202,14 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
               SizedBox(
                 height: 10,
               ),
-              Slider(value: t1.maxFontSize, max: 100, min: 10, onChanged: (val)=>_setMaxTextSize(val), activeColor: Colors.white, inactiveColor: Colors.white30,),
+              Slider(
+                value: t1.maxFontSize,
+                max: 100,
+                min: 10,
+                onChanged: (val) => _setMaxTextSize(val),
+                activeColor: Colors.white,
+                inactiveColor: Colors.white30,
+              ),
               SizedBox(
                 height: 30,
               ),
@@ -269,91 +284,11 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                   SizedBox(
                     width: 10,
                   ),
-                  Expanded(
-                    child: DropdownButtonHideUnderline(
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 7),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.white,
-                            ),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: DropdownButton<String>(
-                          items: [
-                            DropdownMenuItem(
-                              child: Text("Lato"),
-                              value: 'Lato',
-                            ),
-                            DropdownMenuItem(
-                              child: Text("Poppins"),
-                              value: 'Poppins',
-                            ),
-                            DropdownMenuItem(
-                              child: Text("Coda"),
-                              value: 'Coda',
-                            )
-                          ],
-                          onChanged: (value) {
-                            _setFamily(value);
-                          },
-                          value: t1.fontFamily,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline3
-                              .copyWith(fontSize: 18),
-                          dropdownColor: Theme.of(context).primaryColor,
-                          iconEnabledColor: Colors.white,
-                          iconDisabledColor: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
+                  _getDropdown('Lato', 'Poppins', 'Coda', _setFamily, t1.fontFamily),
                   SizedBox(
                     width: 20,
                   ),
-                  Expanded(
-                    child: DropdownButtonHideUnderline(
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 7),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.white,
-                            ),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: DropdownButton<String>(
-                          items: [
-                            DropdownMenuItem(
-                              child: Text("Center"),
-                              value: 'center',
-                            ),
-                            DropdownMenuItem(
-                              child: Text("Left"),
-                              value: 'left',
-                            ),
-                            DropdownMenuItem(
-                              child: Text("Right"),
-                              value: 'right',
-                            )
-                          ],
-                          onChanged: (value) {
-                            _setTextAlign(value);
-                          },
-                          value: _textAlignName,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline3
-                              .copyWith(fontSize: 18),
-                          dropdownColor: Theme.of(context).primaryColor,
-                          iconEnabledColor: Colors.white,
-                          iconDisabledColor: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
+                  _getDropdown('left', 'center', 'right', _setTextAlign,_textAlignName),
                   SizedBox(
                     width: 10,
                   ),
@@ -446,8 +381,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
     }
   }
 
-
   Color _pickerColor = Color(0xff98FF54);
+
   void changeColor(Color color) {
     setState(() => _pickerColor = color);
   }
@@ -471,6 +406,43 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
           color: actual == _chosenWeightButton
               ? Colors.white
               : Theme.of(context).primaryColor,
+        ),
+      );
+
+  Widget _getDropdown(String value1, String value2, String value3, Function handler,String actualValue) =>
+      Expanded(
+        child: DropdownButtonHideUnderline(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 7),
+            decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.white,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            child: DropdownButton<String>(
+              items: [
+                DropdownMenuItem(
+                  child: Text(value1),
+                  value: value1,
+                ),
+                DropdownMenuItem(
+                  child: Text(value2),
+                  value: value2,
+                ),
+                DropdownMenuItem(
+                  child: Text(value3),
+                  value: value3,
+                )
+              ],
+              onChanged: (value) => handler(value),
+              value: actualValue,
+              style:
+                  Theme.of(context).textTheme.headline3.copyWith(fontSize: 18),
+              dropdownColor: Theme.of(context).primaryColor,
+              iconEnabledColor: Colors.white,
+              iconDisabledColor: Colors.white,
+            ),
+          ),
         ),
       );
 }
