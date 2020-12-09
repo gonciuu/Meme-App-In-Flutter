@@ -37,63 +37,67 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
               SizedBox(
                 height: 20,
               ),
-              Container(
-                width: double.infinity,
-                height: 300,
-                child: Stack(
-                  children: [
-                    ClipRRect(
-                      child: Image.network(
-                        'https://bingoland.pl/userdata/public/gfx/2652/tlo-fotograficzne-biale.jpg',
-                        width: double.infinity,
-                        fit: BoxFit.fill,
-                        height: 300,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    Align(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: Container(
+              InteractiveViewer(
+                minScale: 1,
+                maxScale: 1.2,
+                child: Container(
+                  width: double.infinity,
+                  height: 300,
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        child: Image.network(
+                          'https://bingoland.pl/userdata/public/gfx/2652/tlo-fotograficzne-biale.jpg',
                           width: double.infinity,
-                          child: AutoSizeText(
-                            t1.text,
-                            textAlign: t1.align,
-                            maxLines: 3,
-                            softWrap: true,
-                            style: TextStyle(
-                                color: t1.color,
-                                fontSize: t1.maxFontSize,
-                                fontWeight: t1.weight,
-                                fontFamily: t1.fontFamily),
+                          fit: BoxFit.fill,
+                          height: 300,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      Align(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Container(
+                            width: double.infinity,
+                            child: AutoSizeText(
+                              t1.text,
+                              textAlign: t1.align,
+                              maxLines: 3,
+                              softWrap: true,
+                              style: TextStyle(
+                                  color: t1.color,
+                                  fontSize: t1.maxFontSize,
+                                  fontWeight: t1.weight,
+                                  fontFamily: t1.fontFamily),
+                            ),
                           ),
                         ),
+                        alignment: Alignment.topCenter,
                       ),
-                      alignment: Alignment.topCenter,
-                    ),
-                    Align(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: Container(
-                          width: double.infinity,
-                          child: AutoSizeText(
-                            t2.text,
-                            textAlign: t2.align,
-                            maxLines: 3,
-                            softWrap: true,
-                            style: TextStyle(
-                                color: t2.color,
-                                fontSize: t2.maxFontSize,
-                                fontWeight: t2.weight,
-                                fontFamily: t2.fontFamily),
+                      Align(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Container(
+                            width: double.infinity,
+                            child: AutoSizeText(
+                              t2.text,
+                              textAlign: t2.align,
+                              maxLines: 3,
+                              softWrap: true,
+                              style: TextStyle(
+                                  color: t2.color,
+                                  fontSize: t2.maxFontSize,
+                                  fontWeight: t2.weight,
+                                  fontFamily: t2.fontFamily),
+                            ),
                           ),
                         ),
-                      ),
-                      alignment: Alignment.bottomCenter,
-                    )
-                  ],
+                        alignment: Alignment.bottomCenter,
+                      )
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(
