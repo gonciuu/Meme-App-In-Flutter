@@ -33,6 +33,7 @@ dependencies:
   auto_size_text: ^2.1.0
   provider: ^4.3.2+3
   http: ^0.12.2
+  animated_text_kit: ^2.5.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

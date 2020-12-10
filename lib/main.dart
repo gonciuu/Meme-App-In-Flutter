@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/ideapad/Desktop/Programowanie/flutter/memix/lib/screens/add_meme_screen.dart';
+import './screens/loading_data_screen.dart';
+import './screens/add_meme_screen.dart';
 import './screens/home_screen.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 
@@ -28,10 +29,10 @@ class MyApp extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: Colors.white),
-            headline6: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Colors.white),
+                headline6: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white),
               ),
           backgroundColor: Color.fromARGB(255, 43, 39, 51),
           fontFamily: 'Lato',
@@ -39,8 +40,11 @@ class MyApp extends StatelessWidget {
           accentColor: Color.fromARGB(255, 43, 39, 51),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        initialRoute: '/',
-        routes: {'/': (context) => HomePage()});
+        initialRoute: LoadingDataScreen.routeName,
+        routes: {
+          '/': (context) => HomePage(),
+          LoadingDataScreen.routeName: (context) => LoadingDataScreen()
+        });
   }
 }
 
@@ -51,7 +55,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _views = [
-   AddMemeScreen(),
+    AddMemeScreen(),
     HomeScreen(),
     Text("2", style: TextStyle(color: Colors.white))
   ];
@@ -60,7 +64,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(),
+        drawer: Drawer(),
         drawerEnableOpenDragGesture: true,
         bottomNavigationBar: Container(
           padding: EdgeInsets.symmetric(vertical: 7.0, horizontal: 5.0),
