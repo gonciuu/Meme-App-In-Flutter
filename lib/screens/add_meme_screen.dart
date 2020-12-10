@@ -20,7 +20,6 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
 
   int _chosenWeightButton = 1;
   Color _pickerColor = Color(0xff98FF54);
-
   final consts = Consts();
 
   @override
