@@ -19,8 +19,12 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   int _chosenWeightButton = 1;
   Color _pickerColor = Color(0xff98FF54);
 
+
+
   @override
   Widget build(BuildContext context) {
+    final deviceHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom;
+    final theme = Theme.of(context);
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
@@ -30,7 +34,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
             children: [
               Text(
                 "Create Meme",
-                style: Theme.of(context).textTheme.headline2,
+                style: theme.textTheme.headline2,
               ),
               SizedBox(
                 height: 20,
@@ -40,7 +44,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                 maxScale: 1.2,
                 child: Container(
                   width: double.infinity,
-                  height: 300,
+                  height: deviceHeight/3,
                   child: Stack(
                     children: [
                       ClipRRect(
@@ -48,7 +52,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                           'https://bingoland.pl/userdata/public/gfx/2652/tlo-fotograficzne-biale.jpg',
                           width: double.infinity,
                           fit: BoxFit.fill,
-                          height: 300,
+                          height: double.infinity,
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -107,14 +111,14 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
                     hintText: 'Enter Top Text',
-                    hintStyle: Theme.of(context)
+                    hintStyle: theme
                         .textTheme
                         .headline6
                         .copyWith(color: Colors.grey),
                     focusedBorder: border,
                     enabledBorder: border.copyWith(
                         borderSide: BorderSide(color: Colors.grey[600]))),
-                style: Theme.of(context).textTheme.headline6,
+                style: theme.textTheme.headline6,
                 onChanged: (val) => setState(() => t1.text = val),
               ),
               const SizedBox(
@@ -126,14 +130,14 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
                     hintText: 'Enter Bottom Text',
-                    hintStyle: Theme.of(context)
+                    hintStyle: theme
                         .textTheme
                         .headline6
                         .copyWith(color: Colors.grey),
                     focusedBorder: border,
                     enabledBorder: border.copyWith(
                         borderSide: BorderSide(color: Colors.grey[600]))),
-                style: Theme.of(context).textTheme.headline6,
+                style: theme.textTheme.headline6,
                 onChanged: (val) => setState(() => t2.text = val),
               ),
               SizedBox(
@@ -142,7 +146,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
               Text(
                 "Text Color\n(click to change)",
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline3,
+                style: theme.textTheme.headline3,
               ),
               SizedBox(
                 height: 10,
@@ -157,11 +161,11 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                   showDialog(
                     context: context,
                     child: AlertDialog(
-                      titleTextStyle: Theme.of(context)
+                      titleTextStyle: theme
                           .textTheme
                           .headline3
                           .copyWith(fontSize: 16.0),
-                      backgroundColor: Theme.of(context).primaryColor,
+                      backgroundColor: theme.primaryColor,
                       title: const Text('Pick a color!'),
                       content: SingleChildScrollView(
                         child: ColorPicker(
@@ -175,7 +179,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                         FlatButton(
                           child: Text(
                             'Choose',
-                            style: Theme.of(context)
+                            style: theme
                                 .textTheme
                                 .headline3
                                 .copyWith(fontSize: 16),
@@ -198,7 +202,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
               ),
               Text(
                 "Max Text Size",
-                style: Theme.of(context).textTheme.headline3,
+                style: theme.textTheme.headline3,
               ),
               SizedBox(
                 height: 10,
@@ -216,7 +220,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
               ),
               Text(
                 "Text Style",
-                style: Theme.of(context).textTheme.headline3,
+                style: theme.textTheme.headline3,
               ),
               SizedBox(
                 height: 10,
@@ -258,7 +262,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                     child: Text(
                       "Font Family",
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline3,
+                      style: theme.textTheme.headline3,
                     ),
                   ),
                   SizedBox(
@@ -268,7 +272,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                     child: Text(
                       "Text Align",
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline3,
+                      style: theme.textTheme.headline3,
                     ),
                   ),
                   SizedBox(
@@ -306,10 +310,10 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: Text(
                     "Create Meme",
-                    style: Theme.of(context)
+                    style: theme
                         .textTheme
                         .headline3
-                        .copyWith(color: Theme.of(context).primaryColor),
+                        .copyWith(color: theme.primaryColor),
                   ),
                   onPressed: () {},
                   shape: RoundedRectangleBorder(
