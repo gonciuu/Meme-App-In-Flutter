@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'file:///C:/Users/ideapad/Desktop/Programowanie/flutter/memix/lib/providers/photos.dart';
 import '../models/meme_text.dart';
 import '../widgets/consts.dart';
 
@@ -21,6 +22,11 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
 
 
 
+  @override
+  void initState() {
+    Photos().getPhotosFromWeb();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom;

@@ -31,6 +31,8 @@ dependencies:
   outline_material_icons: ^0.1.1
   flutter_colorpicker: ^0.3.4
   auto_size_text: ^2.1.0
+  provider: ^4.3.2+3
+  http: ^0.12.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
