@@ -21,6 +21,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   Color _pickerColor = Color(0xff98FF54);
 
 
+  final consts = Consts();
 
   @override
   void initState() {
@@ -121,8 +122,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                         .textTheme
                         .headline6
                         .copyWith(color: Colors.grey),
-                    focusedBorder: border,
-                    enabledBorder: border.copyWith(
+                    focusedBorder: consts.border,
+                    enabledBorder: consts.border.copyWith(
                         borderSide: BorderSide(color: Colors.grey[600]))),
                 style: theme.textTheme.headline6,
                 onChanged: (val) => setState(() => t1.text = val),
@@ -140,8 +141,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                         .textTheme
                         .headline6
                         .copyWith(color: Colors.grey),
-                    focusedBorder: border,
-                    enabledBorder: border.copyWith(
+                    focusedBorder: consts.border,
+                    enabledBorder: consts.border.copyWith(
                         borderSide: BorderSide(color: Colors.grey[600]))),
                 style: theme.textTheme.headline6,
                 onChanged: (val) => setState(() => t2.text = val),
