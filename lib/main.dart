@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:memix/add_meme_screen.dart';
+import 'file:///C:/Users/ideapad/Desktop/Programowanie/flutter/memix/lib/screens/add_meme_screen.dart';
 import './screens/home_screen.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 

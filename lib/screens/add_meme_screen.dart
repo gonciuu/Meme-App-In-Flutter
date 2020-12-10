@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import './meme_text.dart';
-import './consts.dart';
+import '../models/meme_text.dart';
+import '../widgets/consts.dart';
 
 class AddMemeScreen extends StatefulWidget {
   @override
