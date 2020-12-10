@@ -8,6 +8,7 @@ class Consts {
 
   SnackBar getSnackBar(String content) {
     return SnackBar(
+      backgroundColor: Color.fromARGB(255, 25, 23, 32),
       duration: Duration(seconds: 3),
       content: Text(content,maxLines: 3, overflow: TextOverflow.ellipsis,softWrap: true,),
     );

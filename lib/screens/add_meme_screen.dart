@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'file:///C:/Users/ideapad/Desktop/Programowanie/flutter/memix/lib/providers/photos.dart';
+import '../widgets/choose_photo_sheet.dart';
+import '../providers/photos.dart';
 import '../models/meme_text.dart';
 import '../widgets/consts.dart';
 
@@ -20,7 +21,6 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   int _chosenWeightButton = 1;
   Color _pickerColor = Color(0xff98FF54);
 
-
   final consts = Consts();
 
   @override
@@ -28,9 +28,12 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
     Photos().getPhotosFromWeb();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    final deviceHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom;
+    final deviceHeight = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).padding.top -
+        MediaQuery.of(context).padding.bottom;
     final theme = Theme.of(context);
     return SingleChildScrollView(
       child: Padding(
@@ -49,63 +52,72 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
               InteractiveViewer(
                 minScale: 1,
                 maxScale: 1.2,
-                child: Container(
-                  width: double.infinity,
-                  height: deviceHeight/3,
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        child: Image.network(
-                          'https://bingoland.pl/userdata/public/gfx/2652/tlo-fotograficzne-biale.jpg',
-                          width: double.infinity,
-                          fit: BoxFit.fill,
-                          height: double.infinity,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      Align(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: Container(
+                child: GestureDetector(
+                  onTap: () => showModalBottomSheet(
+                      context: context,
+                      builder: (context) => ChoosePhotoSheet(),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20))),backgroundColor: Theme.of(context).accentColor),
+                  child: Container(
+                    width: double.infinity,
+                    height: deviceHeight / 3,
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          child: Image.network(
+                            'https://bingoland.pl/userdata/public/gfx/2652/tlo-fotograficzne-biale.jpg',
                             width: double.infinity,
-                            child: AutoSizeText(
-                              t1.text,
-                              textAlign: t1.align,
-                              maxLines: 3,
-                              softWrap: true,
-                              style: TextStyle(
-                                  color: t1.color,
-                                  fontSize: t1.maxFontSize,
-                                  fontWeight: t1.weight,
-                                  fontFamily: t1.fontFamily),
+                            fit: BoxFit.fill,
+                            height: double.infinity,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        Align(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: Container(
+                              width: double.infinity,
+                              child: AutoSizeText(
+                                t1.text,
+                                textAlign: t1.align,
+                                maxLines: 3,
+                                softWrap: true,
+                                style: TextStyle(
+                                    color: t1.color,
+                                    fontSize: t1.maxFontSize,
+                                    fontWeight: t1.weight,
+                                    fontFamily: t1.fontFamily),
+                              ),
                             ),
                           ),
+                          alignment: Alignment.topCenter,
                         ),
-                        alignment: Alignment.topCenter,
-                      ),
-                      Align(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: Container(
-                            width: double.infinity,
-                            child: AutoSizeText(
-                              t2.text,
-                              textAlign: t2.align,
-                              maxLines: 3,
-                              softWrap: true,
-                              style: TextStyle(
-                                  color: t2.color,
-                                  fontSize: t2.maxFontSize,
-                                  fontWeight: t2.weight,
-                                  fontFamily: t2.fontFamily),
+                        Align(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: Container(
+                              width: double.infinity,
+                              child: AutoSizeText(
+                                t2.text,
+                                textAlign: t2.align,
+                                maxLines: 3,
+                                softWrap: true,
+                                style: TextStyle(
+                                    color: t2.color,
+                                    fontSize: t2.maxFontSize,
+                                    fontWeight: t2.weight,
+                                    fontFamily: t2.fontFamily),
+                              ),
                             ),
                           ),
-                        ),
-                        alignment: Alignment.bottomCenter,
-                      )
-                    ],
+                          alignment: Alignment.bottomCenter,
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -118,10 +130,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
                     hintText: 'Enter Top Text',
-                    hintStyle: theme
-                        .textTheme
-                        .headline6
-                        .copyWith(color: Colors.grey),
+                    hintStyle:
+                        theme.textTheme.headline6.copyWith(color: Colors.grey),
                     focusedBorder: consts.border,
                     enabledBorder: consts.border.copyWith(
                         borderSide: BorderSide(color: Colors.grey[600]))),
@@ -137,10 +147,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
                     hintText: 'Enter Bottom Text',
-                    hintStyle: theme
-                        .textTheme
-                        .headline6
-                        .copyWith(color: Colors.grey),
+                    hintStyle:
+                        theme.textTheme.headline6.copyWith(color: Colors.grey),
                     focusedBorder: consts.border,
                     enabledBorder: consts.border.copyWith(
                         borderSide: BorderSide(color: Colors.grey[600]))),
@@ -168,10 +176,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                   showDialog(
                     context: context,
                     child: AlertDialog(
-                      titleTextStyle: theme
-                          .textTheme
-                          .headline3
-                          .copyWith(fontSize: 16.0),
+                      titleTextStyle:
+                          theme.textTheme.headline3.copyWith(fontSize: 16.0),
                       backgroundColor: theme.primaryColor,
                       title: const Text('Pick a color!'),
                       content: SingleChildScrollView(
@@ -186,9 +192,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                         FlatButton(
                           child: Text(
                             'Choose',
-                            style: theme
-                                .textTheme
-                                .headline3
+                            style: theme.textTheme.headline3
                                 .copyWith(fontSize: 16),
                           ),
                           onPressed: () {
@@ -317,9 +321,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: Text(
                     "Create Meme",
-                    style: theme
-                        .textTheme
-                        .headline3
+                    style: theme.textTheme.headline3
                         .copyWith(color: theme.primaryColor),
                   ),
                   onPressed: () {},

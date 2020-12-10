@@ -44,7 +44,7 @@ class _LoadingDataScreenState extends State<LoadingDataScreen> {
               repeatForever: true,
               speed: Duration(milliseconds: 100),
               text: [
-                "Loading...",
+                "Loading data...",
               ],
               textStyle: TextStyle(fontSize: 30.0, color: Colors.white),
               textAlign: TextAlign.start,
