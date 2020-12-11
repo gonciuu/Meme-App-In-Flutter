@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,75 +49,85 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
               SizedBox(
                 height: 20,
               ),
-              InteractiveViewer(
-                minScale: 1,
-                maxScale: 1.2,
-                child: GestureDetector(
-                  onTap: () => showModalBottomSheet(
-                      context: context,
-                      builder: (context) => ChoosePhotoSheet(),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20))),backgroundColor: Theme.of(context).accentColor),
-                  child: Container(
-                    width: double.infinity,
-                    height: deviceHeight / 3,
-                    child: Stack(
-                      children: [
-                        ClipRRect(
-                          child: Image.network(
-                            'https://bingoland.pl/userdata/public/gfx/2652/tlo-fotograficzne-biale.jpg',
+              InkWell(
+                onTap: () => showModalBottomSheet(
+                    context: context,
+                    builder: (context) => ChoosePhotoSheet(),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20))),backgroundColor: Theme.of(context).accentColor),
+                child: Container(
+                  decoration: 1<2 ? BoxDecoration(border: Border.all(color: Colors.white,width: 3.0), borderRadius: BorderRadius.circular(10.0)):null,
+                  width: double.infinity,
+                  height: deviceHeight / 3,
+                  child:1<2 ? Center(child: ColorizeAnimatedTextKit(
+                    text: [
+                      "Click to choose photo",
+                    ],
+                    textStyle: Theme.of(context).textTheme.headline3,
+                    colors: [
+                      Colors.white,
+                      Colors.white54,
+                      Colors.white30,
+                      Colors.white10,
+                    ],
+                    textAlign: TextAlign.start,
+                  speed: Duration(milliseconds: 200),repeatForever: true,)
+                  ) : Stack(
+                    children: [
+                      ClipRRect(
+                        child: Image.network(
+                          'https://bingoland.pl/userdata/public/gfx/2652/tlo-fotograficzne-biale.jpg',
+                          width: double.infinity,
+                          fit: BoxFit.fill,
+                          height: double.infinity,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      Align(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Container(
                             width: double.infinity,
-                            fit: BoxFit.fill,
-                            height: double.infinity,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        Align(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 10),
-                            child: Container(
-                              width: double.infinity,
-                              child: AutoSizeText(
-                                t1.text,
-                                textAlign: t1.align,
-                                maxLines: 3,
-                                softWrap: true,
-                                style: TextStyle(
-                                    color: t1.color,
-                                    fontSize: t1.maxFontSize,
-                                    fontWeight: t1.weight,
-                                    fontFamily: t1.fontFamily),
-                              ),
+                            child: AutoSizeText(
+                              t1.text,
+                              textAlign: t1.align,
+                              maxLines: 3,
+                              softWrap: true,
+                              style: TextStyle(
+                                  color: t1.color,
+                                  fontSize: t1.maxFontSize,
+                                  fontWeight: t1.weight,
+                                  fontFamily: t1.fontFamily),
                             ),
                           ),
-                          alignment: Alignment.topCenter,
                         ),
-                        Align(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 10),
-                            child: Container(
-                              width: double.infinity,
-                              child: AutoSizeText(
-                                t2.text,
-                                textAlign: t2.align,
-                                maxLines: 3,
-                                softWrap: true,
-                                style: TextStyle(
-                                    color: t2.color,
-                                    fontSize: t2.maxFontSize,
-                                    fontWeight: t2.weight,
-                                    fontFamily: t2.fontFamily),
-                              ),
+                        alignment: Alignment.topCenter,
+                      ),
+                      Align(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Container(
+                            width: double.infinity,
+                            child: AutoSizeText(
+                              t2.text,
+                              textAlign: t2.align,
+                              maxLines: 3,
+                              softWrap: true,
+                              style: TextStyle(
+                                  color: t2.color,
+                                  fontSize: t2.maxFontSize,
+                                  fontWeight: t2.weight,
+                                  fontFamily: t2.fontFamily),
                             ),
                           ),
-                          alignment: Alignment.bottomCenter,
-                        )
-                      ],
-                    ),
+                        ),
+                        alignment: Alignment.bottomCenter,
+                      )
+                    ],
                   ),
                 ),
               ),
