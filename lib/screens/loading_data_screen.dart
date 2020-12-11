@@ -22,7 +22,7 @@ class _LoadingDataScreenState extends State<LoadingDataScreen> {
         Duration.zero,
         () => Provider.of<Photos>(context, listen: false)
             .getPhotosFromWeb()
-            .then((_) => Navigator.of(context).pushNamed('/'))
+            .then((_) => Navigator.of(context).pushReplacementNamed('/'))
             .catchError((e)=> _scaffoldKey.currentState.showSnackBar(consts.getSnackBar(e.toString()))));
     super.initState();
   }

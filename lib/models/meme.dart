@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import '../models/meme_text.dart';
-import '../models/photo.dart';
+import 'meme_text.dart';
+import 'photo.dart';
 
 class Meme{
 

@@ -6,7 +6,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import '../models/photo.dart';
-import '../providers/meme.dart';
+import '../models/meme.dart';
 import '../widgets/choose_photo_sheet.dart';
 import '../providers/photos.dart';
 import '../models/meme_text.dart';
