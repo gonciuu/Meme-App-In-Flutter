@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import '../models/photo.dart';
+import '../providers/meme.dart';
 import '../widgets/choose_photo_sheet.dart';
 import '../providers/photos.dart';
 import '../models/meme_text.dart';
@@ -16,8 +18,8 @@ class AddMemeScreen extends StatefulWidget {
 }
 
 class _AddMemeScreenState extends State<AddMemeScreen> {
-  MemeText t1 = MemeText();
-  MemeText t2 = MemeText();
+
+  final Meme meme = Meme(id: "xd",bottomText: MemeText(),topText: MemeText(),photo: null);
 
   int _chosenWeightButton = 1;
   Color _pickerColor = Color(0xff98FF54);
@@ -27,6 +29,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   void initState() {
     Photos().getPhotosFromWeb();
     super.initState();
+    print(meme.bottomText.color.toString());
   }
 
   @override
@@ -52,16 +55,16 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
               InkWell(
                 onTap: () => showModalBottomSheet(
                     context: context,
-                    builder: (context) => ChoosePhotoSheet(),
+                    builder: (context) => ChoosePhotoSheet(changePhoto),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20),
                             topRight: Radius.circular(20))),backgroundColor: Theme.of(context).accentColor),
                 child: Container(
-                  decoration: 1<2 ? BoxDecoration(border: Border.all(color: Colors.white,width: 3.0), borderRadius: BorderRadius.circular(10.0)):null,
+                  decoration: meme.photo == null ? BoxDecoration(border: Border.all(color: Colors.white,width: 3.0), borderRadius: BorderRadius.circular(10.0)):null,
                   width: double.infinity,
                   height: deviceHeight / 3,
-                  child:1<2 ? Center(child: ColorizeAnimatedTextKit(
+                  child:meme.photo == null ? Center(child: ColorizeAnimatedTextKit(
                     text: [
                       "Click to choose photo",
                     ],
@@ -78,7 +81,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                     children: [
                       ClipRRect(
                         child: Image.network(
-                          'https://bingoland.pl/userdata/public/gfx/2652/tlo-fotograficzne-biale.jpg',
+                          meme.photo.url,
                           width: double.infinity,
                           fit: BoxFit.fill,
                           height: double.infinity,
@@ -92,15 +95,15 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                           child: Container(
                             width: double.infinity,
                             child: AutoSizeText(
-                              t1.text,
-                              textAlign: t1.align,
+                              meme.topText.text,
+                              textAlign:  meme.topText.align,
                               maxLines: 3,
                               softWrap: true,
                               style: TextStyle(
-                                  color: t1.color,
-                                  fontSize: t1.maxFontSize,
-                                  fontWeight: t1.weight,
-                                  fontFamily: t1.fontFamily),
+                                  color:  meme.topText.color,
+                                  fontSize:  meme.topText.maxFontSize,
+                                  fontWeight:  meme.topText.weight,
+                                  fontFamily:  meme.topText.fontFamily),
                             ),
                           ),
                         ),
@@ -113,15 +116,15 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                           child: Container(
                             width: double.infinity,
                             child: AutoSizeText(
-                              t2.text,
-                              textAlign: t2.align,
+                              meme.bottomText.text,
+                              textAlign: meme.bottomText.align,
                               maxLines: 3,
                               softWrap: true,
                               style: TextStyle(
-                                  color: t2.color,
-                                  fontSize: t2.maxFontSize,
-                                  fontWeight: t2.weight,
-                                  fontFamily: t2.fontFamily),
+                                  color: meme.bottomText.color,
+                                  fontSize: meme.bottomText.maxFontSize,
+                                  fontWeight: meme.bottomText.weight,
+                                  fontFamily: meme.bottomText.fontFamily),
                             ),
                           ),
                         ),
@@ -146,7 +149,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                     enabledBorder: consts.border.copyWith(
                         borderSide: BorderSide(color: Colors.grey[600]))),
                 style: theme.textTheme.headline6,
-                onChanged: (val) => setState(() => t1.text = val),
+                onChanged: (val) => setState(() =>  meme.topText.text = val),
               ),
               const SizedBox(
                 height: 20,
@@ -163,7 +166,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                     enabledBorder: consts.border.copyWith(
                         borderSide: BorderSide(color: Colors.grey[600]))),
                 style: theme.textTheme.headline6,
-                onChanged: (val) => setState(() => t2.text = val),
+                onChanged: (val) => setState(() => meme.bottomText.text = val),
               ),
               SizedBox(
                 height: 30,
@@ -180,7 +183,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                 child: Container(
                   width: 70,
                   height: 70,
-                  color: t1.color,
+                  color:  meme.topText.color,
                 ),
                 onTap: () {
                   showDialog(
@@ -192,7 +195,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                       title: const Text('Pick a color!'),
                       content: SingleChildScrollView(
                         child: ColorPicker(
-                          pickerColor: t1.color,
+                          pickerColor:  meme.topText.color,
                           onColorChanged: changeColor,
                           showLabel: false,
                           pickerAreaHeightPercent: 1,
@@ -207,8 +210,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                           ),
                           onPressed: () {
                             setState(() {
-                              t1.color = _pickerColor;
-                              t2.color = _pickerColor;
+                              meme.topText.color = _pickerColor;
+                              meme.bottomText.color = _pickerColor;
                             });
                             Navigator.of(context).pop();
                           },
@@ -229,7 +232,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                 height: 10,
               ),
               Slider(
-                value: t1.maxFontSize,
+                value:  meme.topText.maxFontSize,
                 max: 100,
                 min: 10,
                 onChanged: (val) => _setMaxTextSize(val),
@@ -311,7 +314,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                     width: 10,
                   ),
                   _getDropdown(
-                      'Lato', 'Poppins', 'Coda', _setFamily, t1.fontFamily),
+                      'Lato', 'Poppins', 'Coda', _setFamily,  meme.topText.fontFamily),
                   SizedBox(
                     width: 20,
                   ),
@@ -350,8 +353,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   //----------------- set weight of text -----------------
   void _setWeight(FontWeight weight, int chosen) {
     setState(() {
-      t1.weight = weight;
-      t2.weight = weight;
+      meme.topText.weight = weight;
+      meme.bottomText.weight = weight;
       _chosenWeightButton = chosen;
     });
   }
@@ -359,8 +362,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   //----------------- set font family of text -----------------
   void _setFamily(String fontFamily) {
     setState(() {
-      t1.fontFamily = fontFamily;
-      t2.fontFamily = fontFamily;
+      meme.topText.fontFamily = fontFamily;
+      meme.bottomText.fontFamily = fontFamily;
     });
   }
 
@@ -385,22 +388,22 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
 
   void _setAlignOnText(TextAlign align) {
     setState(() {
-      t1.align = align;
-      t2.align = align;
+      meme.topText.align = align;
+      meme.bottomText.align = align;
     });
   }
 
   //----------------- set max text size -----------------
   void _setMaxTextSize(double size) {
     setState(() {
-      t1.maxFontSize = size;
-      t2.maxFontSize = size;
+      meme.topText.maxFontSize = size;
+      meme.bottomText.maxFontSize = size;
     });
   }
 
   //----------------- get align name -----------------
   String get _textAlignName {
-    switch (t1.align) {
+    switch ( meme.topText.align) {
       case TextAlign.center:
         return "center";
       case TextAlign.left:
@@ -414,6 +417,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
 
   //handle color change in picker
   void changeColor(Color color) => setState(() => _pickerColor = color);
+
+  void changePhoto(Photo photo) => setState(()=>meme.photo = photo);
 
   //----------------- get font weight button widget -----------------
   Widget _getFontWeightButton(String title, Function handler, int actual) =>

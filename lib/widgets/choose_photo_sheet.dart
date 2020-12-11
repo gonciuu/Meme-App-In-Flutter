@@ -5,6 +5,8 @@ import '../providers/photos.dart';
 import 'package:provider/provider.dart';
 
 class ChoosePhotoSheet extends StatelessWidget {
+  final Function handler;
+  ChoosePhotoSheet(this.handler);
   @override
   Widget build(BuildContext context) {
     final List<Photo> photos = Provider.of<Photos>(context).photos;
@@ -23,22 +25,25 @@ class ChoosePhotoSheet extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        Container(
-                            width: 100,
-                            height: 100,
-                            child: Image.network(photos[index].url,
-                                fit: BoxFit.fill, loadingBuilder: (_, Widget child,
-                                    ImageChunkEvent loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              } else {
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    backgroundColor: Colors.white,
-                                  ),
-                                );
-                              }
-                            })),SizedBox(height: 7,),
+                        InkWell(
+                          onTap : ()=> handler(photos[index]),
+                          child: Container(
+                              width: 100,
+                              height: 100,
+                              child: Image.network(photos[index].url,
+                                  fit: BoxFit.fill, loadingBuilder: (_, Widget child,
+                                      ImageChunkEvent loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                } else {
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  );
+                                }
+                              })),
+                        ),SizedBox(height: 7,),
                         Container(
                             width: 100,
                             child: Text(
