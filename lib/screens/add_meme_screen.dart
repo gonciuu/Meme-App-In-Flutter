@@ -343,7 +343,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                   ),
                   onPressed: () async{
                       await _saveMeme.requestPermission(context);
-                      _saveMeme.saveImage(_globalKey).catchError((e)=>print(e));
+                      _saveMeme.saveImage(_globalKey,context).catchError((e)=>print(e));
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0)),
