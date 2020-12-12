@@ -67,8 +67,12 @@ class SaveMeme {
 
       final result = await ImageGallerySaver.saveImage(pngBytes, quality: 100);
       if (result['isSuccess']) {
+        Scaffold.of(context).showSnackBar(
+            consts.getSnackBar("Saved"));
         Navigator.of(context).pop();
       } else {
+        Scaffold.of(context).showSnackBar(
+            consts.getSnackBar("Something went wrong! $result"));
         Navigator.of(context).pop();
       }
     } catch (e) {
