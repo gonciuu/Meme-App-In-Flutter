@@ -12,13 +12,14 @@ import 'dart:ui' as ui;
 class SaveMeme {
   final consts = Consts();
 
-  Future requestPermission(BuildContext context) async {
+  //----------------------| Request storage permission |-------------------------
+  Future requestPermission(BuildContext context, GlobalKey globalKey) async {
     Map<Permission, PermissionStatus> statuses =
         await [Permission.storage].request();
     final info = statuses[Permission.storage];
     if (info == PermissionStatus.denied) {
       Scaffold.of(context).showSnackBar(
-          consts.getSnackBar("You must accept the permission to save memes"));
+          consts.getSnackBar("You must accept the permission to save memes"));//user denied the permission
     } else if (info == PermissionStatus.permanentlyDenied) {
       showDialog(
           context: context,
@@ -26,16 +27,19 @@ class SaveMeme {
               'Permission',
               'Please Accept the storage permission to save the memes',
               [
-                AlertDialogAction(() => Navigator.of(context).pop(), 'Cancel'),
+                AlertDialogAction(() => Navigator.of(context).pop(), 'Cancel'),//user permanently denied the permission
                 AlertDialogAction(() async {
                   await openAppSettings();
                   Navigator.of(context).pop();
                 }, 'Confirm'),
               ],
               context));
+    }else if(info == PermissionStatus.granted){
+      saveImage(globalKey,context).catchError((e)=> Scaffold.of(context).showSnackBar(consts.getSnackBar("Something went wrong! $e")));
     }
   }
 
+  //----------------------------| Save image to gallery |------------------------------
   Future saveImage(GlobalKey globalKey, BuildContext context) async {
     try {
       showDialog(
@@ -47,7 +51,7 @@ class SaveMeme {
                   children: [
                     CircularProgressIndicator(
                       backgroundColor: Colors.white,
-                    ),SizedBox(width: 20),
+                    ),SizedBox(width: 20),      //saving progress dialog
                     Text(
                       'Saving image...',
                       style: Theme.of(context)
@@ -64,18 +68,15 @@ class SaveMeme {
       final ByteData byteData =
           await image.toByteData(format: ui.ImageByteFormat.png);
       final pngBytes = byteData.buffer.asUint8List();
-
       final result = await ImageGallerySaver.saveImage(pngBytes, quality: 100);
-      if (result['isSuccess']) {
-        Scaffold.of(context).showSnackBar(
-            consts.getSnackBar("Saved"));
-        Navigator.of(context).pop();
-      } else {
-        Scaffold.of(context).showSnackBar(
-            consts.getSnackBar("Something went wrong! $result"));
-        Navigator.of(context).pop();
-      }
+      if (result['isSuccess'])
+        Scaffold.of(context).showSnackBar(consts.getSnackBar("Saved"));
+       else
+        Scaffold.of(context).showSnackBar(consts.getSnackBar("Something went wrong! $result"));
+
+      Navigator.of(context).pop();
     } catch (e) {
+      Navigator.of(context).pop();
       throw e;
     }
   }

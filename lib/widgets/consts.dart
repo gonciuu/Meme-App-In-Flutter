@@ -7,6 +7,8 @@ class Consts {
       borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(color: Colors.white, width: 1.0));
 
+
+  //----------------| Get basic snackbar just with text |-----------------
   SnackBar getSnackBar(String content) => SnackBar(
         backgroundColor: Color.fromARGB(255, 25, 23, 32),
         duration: Duration(seconds: 3),
@@ -18,6 +20,7 @@ class Consts {
         ),
       );
 
+  //---------------------------| Get Basic alert dialog with title, messages and actions |------------------------
   AlertDialog getAlertDialog(String title, String content, List<AlertDialogAction> actionsBt,BuildContext context) =>
       AlertDialog(
         backgroundColor: Theme.of(context).primaryColor,

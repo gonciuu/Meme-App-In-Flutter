@@ -21,11 +21,12 @@ class AddMemeScreen extends StatefulWidget {
 class _AddMemeScreenState extends State<AddMemeScreen> {
 
   final Meme meme = Meme(id: "xd",bottomText: MemeText(),topText: MemeText(),photo: null);
+  final consts = Consts();
+  final _saveMeme = SaveMeme();
+
   GlobalKey _globalKey = GlobalKey();
   int _chosenWeightButton = 1;
   Color _pickerColor = Color(0xff98FF54);
-  final consts = Consts();
-  final _saveMeme = SaveMeme();
 
   @override
   void initState() {
@@ -342,8 +343,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                         .copyWith(color: theme.primaryColor),
                   ),
                   onPressed: () async{
-                      await _saveMeme.requestPermission(context);
-                      _saveMeme.saveImage(_globalKey,context).catchError((e)=> Scaffold.of(context).showSnackBar(consts.getSnackBar("Something went wrong! $e")));
+                      await _saveMeme.requestPermission(context, _globalKey);
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0)),
