@@ -28,6 +28,9 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   int _chosenWeightButton = 1;
   Color _pickerColor = Color(0xff98FF54);
 
+  final _bottomTextFocus = FocusNode();
+
+
   @override
   void initState() {
     Photos().getPhotosFromWeb();
@@ -155,11 +158,13 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                         borderSide: BorderSide(color: Colors.grey[600]))),
                 style: theme.textTheme.headline6,
                 onChanged: (val) => setState(() =>  meme.topText.text = val),
+                onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_bottomTextFocus),
               ),
               const SizedBox(
                 height: 20,
               ),
               TextFormField(
+                focusNode: _bottomTextFocus,
                 cursorColor: Colors.white,
                 decoration: InputDecoration(
                     contentPadding:
@@ -172,6 +177,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                         borderSide: BorderSide(color: Colors.grey[600]))),
                 style: theme.textTheme.headline6,
                 onChanged: (val) => setState(() => meme.bottomText.text = val),
+                onEditingComplete:()=>_bottomTextFocus.unfocus(),
               ),
               SizedBox(
                 height: 30,
@@ -463,6 +469,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(10))),
             child: DropdownButton<String>(
+              isExpanded: true,
               items: [
                 DropdownMenuItem(
                   child: Text(value1),

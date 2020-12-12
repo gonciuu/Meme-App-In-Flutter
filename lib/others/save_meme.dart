@@ -49,9 +49,9 @@ class SaveMeme {
                 backgroundColor: Theme.of(context).primaryColor,
                 content: Row(
                   children: [
-                    CircularProgressIndicator(
+                    const CircularProgressIndicator(
                       backgroundColor: Colors.white,
-                    ),SizedBox(width: 20),      //saving progress dialog
+                    ),const SizedBox(width: 20),      //saving progress dialog
                     Text(
                       'Saving image...',
                       style: Theme.of(context)

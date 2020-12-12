@@ -11,7 +11,7 @@ class Consts {
   //----------------| Get basic snackbar just with text |-----------------
   SnackBar getSnackBar(String content) => SnackBar(
         backgroundColor: Color.fromARGB(255, 25, 23, 32),
-        duration: Duration(seconds: 3),
+        duration: const Duration(seconds: 3),
         content: Text(
           content,
           maxLines: 3,

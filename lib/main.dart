@@ -80,25 +80,31 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              IconButton(
-                icon: Icon(OMIcons.addBox,
-                    color: _currentIndex == 0 ? Colors.white : Colors.white30),
-                onPressed: () => setState(() => _updateIndex(0)),
-                iconSize: 32.0,
-              ),
-              IconButton(
-                icon: Icon(
-                  OMIcons.image,
-                  color: _currentIndex == 1 ? Colors.white : Colors.white30,
+              Expanded(
+                child: IconButton(
+                  icon: Icon(OMIcons.addBox,
+                      color: _currentIndex == 0 ? Colors.white : Colors.white30),
+                  onPressed: () => setState(() => _updateIndex(0)),
+                  iconSize: 32.0,
                 ),
-                onPressed: () => setState(() => _updateIndex(1)),
-                iconSize: 32.0,
               ),
-              IconButton(
-                icon: Icon(OMIcons.favoriteBorder,
-                    color: _currentIndex == 2 ? Colors.white : Colors.white30),
-                onPressed: () => setState(() => _updateIndex(2)),
-                iconSize: 32.0,
+              Expanded(
+                child: IconButton(
+                  icon: Icon(
+                    OMIcons.image,
+                    color: _currentIndex == 1 ? Colors.white : Colors.white30,
+                  ),
+                  onPressed: () => setState(() => _updateIndex(1)),
+                  iconSize: 32.0,
+                ),
+              ),
+              Expanded(
+                child: IconButton(
+                  icon: Icon(OMIcons.favoriteBorder,
+                      color: _currentIndex == 2 ? Colors.white : Colors.white30),
+                  onPressed: () => setState(() => _updateIndex(2)),
+                  iconSize: 32.0,
+                ),
               )
             ],
           ),
