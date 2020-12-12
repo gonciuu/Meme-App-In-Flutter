@@ -13,4 +13,8 @@ class Consts {
       content: Text(content,maxLines: 3, overflow: TextOverflow.ellipsis,softWrap: true,),
     );
   }
+
+  AlertDialog getAlertDialog(){
+
+  }
 }

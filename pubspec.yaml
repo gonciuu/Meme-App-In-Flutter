@@ -34,6 +34,8 @@ dependencies:
   provider: ^4.3.2+3
   http: ^0.12.2
   animated_text_kit: ^2.5.4
+  image_gallery_saver: ^1.6.7
+  permission_handler: ^5.0.1+1
 dev_dependencies:
   flutter_test:
     sdk: flutter
