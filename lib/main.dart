@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import './providers/memes.dart';
 import './providers/photos.dart';
 import 'package:provider/provider.dart';
 import './screens/loading_data_screen.dart';
@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_)=> Photos())
+        ChangeNotifierProvider(create: (_)=> Photos()),
+        ChangeNotifierProvider(create: (_)=> Memes())
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

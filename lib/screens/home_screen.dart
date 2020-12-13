@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import '../providers/memes.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
+import 'package:provider/provider.dart';
 import '../widgets/meme_card.dart';
 
 enum FilterOptions { MostPopular, Latest, OnlyFavourites }
@@ -7,6 +9,7 @@ enum FilterOptions { MostPopular, Latest, OnlyFavourites }
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final memes = Provider.of<Memes>(context).memes;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SingleChildScrollView(
@@ -134,8 +137,11 @@ class HomeScreen extends StatelessWidget {
               height: 10,
             ),
             ListView.builder(
-              itemBuilder: (context, index) => MemeCard(),
-              itemCount: 5,
+              itemBuilder: (context, index) => ChangeNotifierProvider.value(
+                value: memes[index],
+                child: MemeCard(),
+              ),
+              itemCount: memes.length,
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),

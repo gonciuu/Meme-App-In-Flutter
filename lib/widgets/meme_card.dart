@@ -1,13 +1,17 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
+import '../providers/meme.dart';
+import 'package:provider/provider.dart';
 
 class MemeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final meme = Provider.of<Meme>(context,listen:false);
     final screenHeight = MediaQuery.of(context).size.height -
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom;
+
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20.0),
       height: screenHeight / 2.2,
@@ -15,32 +19,55 @@ class MemeCard extends StatelessWidget {
       child: Stack(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
             child: Image.network(
-              'https://thepsychologist.bps.org.uk/sites/thepsychologist.bps.org.uk/files/img_9685.jpg',
-              fit: BoxFit.fill,
+              meme.photo.url,
               width: double.infinity,
-              height: screenHeight / 2.5,
+              fit: BoxFit.fill,
+              height: double.infinity,
             ),
+            borderRadius: BorderRadius.circular(10),
           ),
           Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              padding: EdgeInsets.all(20.0),
-              width: 70,
-              height: 70,
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor.withOpacity(1),
-                borderRadius: BorderRadius.circular(100.0),
-              ),
-              child: FittedBox(
-                child: Icon(
-                  OMIcons.favoriteBorder,
-                  size: 32.0,
-                  color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 15, vertical: 10),
+              child: Container(
+                width: double.infinity,
+                child: AutoSizeText(
+                  meme.topText,
+                  textAlign:  meme.memeTextStyle.align,
+                  maxLines: 3,
+                  softWrap: true,
+                  style: TextStyle(
+                      color:  meme.memeTextStyle.color,
+                      fontSize:  meme.memeTextStyle.maxFontSize,
+                      fontWeight:  meme.memeTextStyle.weight,
+                      fontFamily:  meme.memeTextStyle.fontFamily),
                 ),
               ),
             ),
+            alignment: Alignment.topCenter,
+          ),
+          Align(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 15, vertical: 10),
+              child: Container(
+                width: double.infinity,
+                child: AutoSizeText(
+                  meme.bottomText,
+                  textAlign: meme.memeTextStyle.align,
+                  maxLines: 3,
+                  softWrap: true,
+                  style: TextStyle(
+                      color: meme.memeTextStyle.color,
+                      fontSize: meme.memeTextStyle.maxFontSize,
+                      fontWeight: meme.memeTextStyle.weight,
+                      fontFamily: meme.memeTextStyle.fontFamily),
+                ),
+              ),
+            ),
+            alignment: Alignment.bottomCenter,
           )
         ],
       ),

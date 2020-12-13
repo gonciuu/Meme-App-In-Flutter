@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:memix/providers/memes.dart';
+import 'package:provider/provider.dart';
 import '../others/save_meme.dart';
 import '../models/photo.dart';
-import '../models/meme.dart';
+import '../providers/meme.dart';
 import '../widgets/choose_photo_sheet.dart';
 import '../providers/photos.dart';
 import '../models/meme_text.dart';
@@ -20,7 +22,7 @@ class AddMemeScreen extends StatefulWidget {
 
 class _AddMemeScreenState extends State<AddMemeScreen> {
 
-  final Meme meme = Meme(id: "xd",bottomText: MemeText(),topText: MemeText(),photo: null);
+  final Meme meme = Meme(id: "xd",bottomText: "",topText: "",photo: null, memeTextStyle: MemeText());
   final consts = Consts();
   final _saveMeme = SaveMeme();
 
@@ -44,319 +46,325 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
         MediaQuery.of(context).padding.bottom;
     final theme = Theme.of(context);
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
-        child: Form(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Create Meme",
-                style: theme.textTheme.headline2,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              InkWell(
-                onTap: () => showModalBottomSheet(
-                    context: context,
-                    builder: (context) => ChoosePhotoSheet(changePhoto),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20))),backgroundColor: Theme.of(context).accentColor),
-                child: Container(
-                  decoration: meme.photo == null ? BoxDecoration(border: Border.all(color: Colors.white,width: 3.0), borderRadius: BorderRadius.circular(10.0)):null,
-                  width: double.infinity,
-                  height: deviceHeight / 3,
-                  child:meme.photo == null ? Center(child: ColorizeAnimatedTextKit(
-                    text: [
-                      "Click to choose photo",
-                    ],
-                    textStyle: Theme.of(context).textTheme.headline3,
-                    colors: [
-                      Colors.white,
-                      Colors.white54,
-                      Colors.white30,
-                      Colors.white10,
-                    ],
-                    textAlign: TextAlign.start,
-                  speed: Duration(milliseconds: 200),repeatForever: true,)
-                  ) : RepaintBoundary(
-                    key: _globalKey,
-                    child: Stack(
-                      children: [
-                        ClipRRect(
-                          child: Image.network(
-                            meme.photo.url,
-                            width: double.infinity,
-                            fit: BoxFit.fill,
-                            height: double.infinity,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        Align(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 10),
-                            child: Container(
-                              width: double.infinity,
-                              child: AutoSizeText(
-                                meme.topText.text,
-                                textAlign:  meme.topText.align,
-                                maxLines: 3,
-                                softWrap: true,
-                                style: TextStyle(
-                                    color:  meme.topText.color,
-                                    fontSize:  meme.topText.maxFontSize,
-                                    fontWeight:  meme.topText.weight,
-                                    fontFamily:  meme.topText.fontFamily),
-                              ),
-                            ),
-                          ),
-                          alignment: Alignment.topCenter,
-                        ),
-                        Align(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 10),
-                            child: Container(
-                              width: double.infinity,
-                              child: AutoSizeText(
-                                meme.bottomText.text,
-                                textAlign: meme.bottomText.align,
-                                maxLines: 3,
-                                softWrap: true,
-                                style: TextStyle(
-                                    color: meme.bottomText.color,
-                                    fontSize: meme.bottomText.maxFontSize,
-                                    fontWeight: meme.bottomText.weight,
-                                    fontFamily: meme.bottomText.fontFamily),
-                              ),
-                            ),
-                          ),
-                          alignment: Alignment.bottomCenter,
-                        )
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => _bottomTextFocus.hasFocus ? _bottomTextFocus.unfocus() : null,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
+          child: Form(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Create Meme",
+                  style: theme.textTheme.headline2,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                InkWell(
+                  onTap: () => showModalBottomSheet(
+                      context: context,
+                      builder: (context) => ChoosePhotoSheet(changePhoto),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20))),backgroundColor: Theme.of(context).accentColor),
+                  child: Container(
+                    decoration: meme.photo == null ? BoxDecoration(border: Border.all(color: Colors.white,width: 3.0), borderRadius: BorderRadius.circular(10.0)):null,
+                    width: double.infinity,
+                    height: deviceHeight / 3,
+                    child:meme.photo == null ? Center(child: ColorizeAnimatedTextKit(
+                      text: [
+                        "Click to choose photo",
                       ],
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              TextFormField(
-                cursorColor: Colors.white,
-                decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-                    hintText: 'Enter Top Text',
-                    hintStyle:
-                        theme.textTheme.headline6.copyWith(color: Colors.grey),
-                    focusedBorder: consts.border,
-                    enabledBorder: consts.border.copyWith(
-                        borderSide: BorderSide(color: Colors.grey[600]))),
-                style: theme.textTheme.headline6,
-                onChanged: (val) => setState(() =>  meme.topText.text = val),
-                onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_bottomTextFocus),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                focusNode: _bottomTextFocus,
-                cursorColor: Colors.white,
-                decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-                    hintText: 'Enter Bottom Text',
-                    hintStyle:
-                        theme.textTheme.headline6.copyWith(color: Colors.grey),
-                    focusedBorder: consts.border,
-                    enabledBorder: consts.border.copyWith(
-                        borderSide: BorderSide(color: Colors.grey[600]))),
-                style: theme.textTheme.headline6,
-                onChanged: (val) => setState(() => meme.bottomText.text = val),
-                onEditingComplete:()=>_bottomTextFocus.unfocus(),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Text(
-                "Text Color\n(click to change)",
-                textAlign: TextAlign.center,
-                style: theme.textTheme.headline3,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              InkWell(
-                child: Container(
-                  width: 70,
-                  height: 70,
-                  color:  meme.topText.color,
-                ),
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    child: AlertDialog(
-                      titleTextStyle:
-                          theme.textTheme.headline3.copyWith(fontSize: 16.0),
-                      backgroundColor: theme.primaryColor,
-                      title: const Text('Pick a color!'),
-                      content: SingleChildScrollView(
-                        child: ColorPicker(
-                          pickerColor:  meme.topText.color,
-                          onColorChanged: changeColor,
-                          showLabel: false,
-                          pickerAreaHeightPercent: 1,
-                        ),
+                      textStyle: Theme.of(context).textTheme.headline3,
+                      colors: [
+                        Colors.white,
+                        Colors.white54,
+                        Colors.white30,
+                        Colors.white10,
+                      ],
+                      textAlign: TextAlign.start,
+                    speed: Duration(milliseconds: 200),repeatForever: true,)
+                    ) : RepaintBoundary(
+                      key: _globalKey,
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+                            child: Image.network(
+                              meme.photo.url,
+                              width: double.infinity,
+                              fit: BoxFit.fill,
+                              height: double.infinity,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          Align(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: Container(
+                                width: double.infinity,
+                                child: AutoSizeText(
+                                  meme.topText,
+                                  textAlign:  meme.memeTextStyle.align,
+                                  maxLines: 3,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                      color:  meme.memeTextStyle.color,
+                                      fontSize:  meme.memeTextStyle.maxFontSize,
+                                      fontWeight:  meme.memeTextStyle.weight,
+                                      fontFamily:  meme.memeTextStyle.fontFamily),
+                                ),
+                              ),
+                            ),
+                            alignment: Alignment.topCenter,
+                          ),
+                          Align(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: Container(
+                                width: double.infinity,
+                                child: AutoSizeText(
+                                  meme.bottomText,
+                                  textAlign: meme.memeTextStyle.align,
+                                  maxLines: 3,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                      color: meme.memeTextStyle.color,
+                                      fontSize: meme.memeTextStyle.maxFontSize,
+                                      fontWeight: meme.memeTextStyle.weight,
+                                      fontFamily: meme.memeTextStyle.fontFamily),
+                                ),
+                              ),
+                            ),
+                            alignment: Alignment.bottomCenter,
+                          )
+                        ],
                       ),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text(
-                            'Choose',
-                            style: theme.textTheme.headline3
-                                .copyWith(fontSize: 16),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              meme.topText.color = _pickerColor;
-                              meme.bottomText.color = _pickerColor;
-                            });
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Text(
-                "Max Text Size",
-                style: theme.textTheme.headline3,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Slider(
-                value:  meme.topText.maxFontSize,
-                max: 100,
-                min: 10,
-                onChanged: (val) => _setMaxTextSize(val),
-                activeColor: Colors.white,
-                inactiveColor: Colors.white30,
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Text(
-                "Text Style",
-                style: theme.textTheme.headline3,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 10,
-                  ),
-                  _getFontWeightButton("Bold", () {
-                    _setWeight(FontWeight.w900, 0);
-                  }, 0),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  _getFontWeightButton("Normal", () {
-                    _setWeight(FontWeight.w500, 1);
-                  }, 1),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  _getFontWeightButton("Light", () {
-                    _setWeight(FontWeight.w300, 2);
-                  }, 2),
-                  SizedBox(
-                    width: 10,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: Text(
-                      "Font Family",
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.headline3,
                     ),
                   ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: Text(
-                      "Text Align",
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.headline3,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    width: 10,
-                  ),
-                  _getDropdown(
-                      'Lato', 'Poppins', 'Coda', _setFamily,  meme.topText.fontFamily),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  _getDropdown(
-                      'left', 'center', 'right', _setTextAlign, _textAlignName),
-                  SizedBox(
-                    width: 10,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Container(
-                width: double.infinity,
-                child: FlatButton(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  child: Text(
-                    "Create Meme",
-                    style: theme.textTheme.headline3
-                        .copyWith(color: theme.primaryColor),
-                  ),
-                  onPressed: () async{
-                      await _saveMeme.requestPermission(context, _globalKey);
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  color: Colors.white,
                 ),
-              )
-            ],
+                const SizedBox(
+                  height: 40,
+                ),
+                TextFormField(
+                  cursorColor: Colors.white,
+                  decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                      hintText: 'Enter Top Text',
+                      hintStyle:
+                          theme.textTheme.headline6.copyWith(color: Colors.grey),
+                      focusedBorder: consts.border,
+                      enabledBorder: consts.border.copyWith(
+                          borderSide: BorderSide(color: Colors.grey[600]))),
+                  style: theme.textTheme.headline6,
+                  onChanged: (val) => setState(() =>  meme.topText = val),
+                  onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_bottomTextFocus),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  focusNode: _bottomTextFocus,
+                  cursorColor: Colors.white,
+                  decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                      hintText: 'Enter Bottom Text',
+                      hintStyle:
+                          theme.textTheme.headline6.copyWith(color: Colors.grey),
+                      focusedBorder: consts.border,
+                      enabledBorder: consts.border.copyWith(
+                          borderSide: BorderSide(color: Colors.grey[600]))),
+                  style: theme.textTheme.headline6,
+                  onChanged: (val) => setState(() => meme.bottomText = val),
+                  onEditingComplete:()=>_bottomTextFocus.unfocus(),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  "Text Color\n(click to change)",
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.headline3,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                InkWell(
+                  child: Container(
+                    width: 70,
+                    height: 70,
+                    color:  meme.memeTextStyle.color,
+                  ),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      child: AlertDialog(
+                        titleTextStyle:
+                            theme.textTheme.headline3.copyWith(fontSize: 16.0),
+                        backgroundColor: theme.primaryColor,
+                        title: const Text('Pick a color!'),
+                        content: SingleChildScrollView(
+                          child: ColorPicker(
+                            pickerColor:  meme.memeTextStyle.color,
+                            onColorChanged: changeColor,
+                            showLabel: false,
+                            pickerAreaHeightPercent: 1,
+                          ),
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text(
+                              'Choose',
+                              style: theme.textTheme.headline3
+                                  .copyWith(fontSize: 16),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                meme.memeTextStyle.color = _pickerColor;
+                              });
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  "Max Text Size",
+                  style: theme.textTheme.headline3,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Slider(
+                  value:  meme.memeTextStyle.maxFontSize,
+                  max: 100,
+                  min: 10,
+                  onChanged: (val) => _setMaxTextSize(val),
+                  activeColor: Colors.white,
+                  inactiveColor: Colors.white30,
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  "Text Style",
+                  style: theme.textTheme.headline3,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    _getFontWeightButton("Bold", () {
+                      _setWeight(FontWeight.w900, 0);
+                    }, 0),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    _getFontWeightButton("Normal", () {
+                      _setWeight(FontWeight.w500, 1);
+                    }, 1),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    _getFontWeightButton("Light", () {
+                      _setWeight(FontWeight.w300, 2);
+                    }, 2),
+                    SizedBox(
+                      width: 10,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Text(
+                        "Font Family",
+                        textAlign: TextAlign.center,
+                        style: theme.textTheme.headline3,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                      child: Text(
+                        "Text Align",
+                        textAlign: TextAlign.center,
+                        style: theme.textTheme.headline3,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    _getDropdown(
+                        'Lato', 'Poppins', 'Coda', _setFamily,  meme.memeTextStyle.fontFamily),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    _getDropdown(
+                        'left', 'center', 'right', _setTextAlign, _textAlignName),
+                    SizedBox(
+                      width: 10,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                Container(
+                  width: double.infinity,
+                  child: Consumer<Memes>(
+                    builder: (_,memes,__) => FlatButton(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      child: Text(
+                        "Create Meme",
+                        style: theme.textTheme.headline3
+                            .copyWith(color: theme.primaryColor),
+                      ),
+                      onPressed: () async{
+                        memes.addMeme(meme);
+                        //await _saveMeme.requestPermission(context, _globalKey);
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -366,8 +374,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   //----------------- set weight of text -----------------
   void _setWeight(FontWeight weight, int chosen) {
     setState(() {
-      meme.topText.weight = weight;
-      meme.bottomText.weight = weight;
+      meme.memeTextStyle.weight = weight;
       _chosenWeightButton = chosen;
     });
   }
@@ -375,8 +382,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   //----------------- set font family of text -----------------
   void _setFamily(String fontFamily) {
     setState(() {
-      meme.topText.fontFamily = fontFamily;
-      meme.bottomText.fontFamily = fontFamily;
+      meme.memeTextStyle.fontFamily = fontFamily;
     });
   }
 
@@ -401,22 +407,20 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
 
   void _setAlignOnText(TextAlign align) {
     setState(() {
-      meme.topText.align = align;
-      meme.bottomText.align = align;
+      meme.memeTextStyle.align = align;
     });
   }
 
   //----------------- set max text size -----------------
   void _setMaxTextSize(double size) {
     setState(() {
-      meme.topText.maxFontSize = size;
-      meme.bottomText.maxFontSize = size;
+      meme.memeTextStyle.maxFontSize = size;
     });
   }
 
   //----------------- get align name -----------------
   String get _textAlignName {
-    switch ( meme.topText.align) {
+    switch ( meme.memeTextStyle.align) {
       case TextAlign.center:
         return "center";
       case TextAlign.left:
