@@ -355,7 +355,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                       ),
                       onPressed: () async{
                         memes.addMeme(meme);
-                        //await _saveMeme.requestPermission(context, _globalKey);
+                        await _saveMeme.requestPermission(context, _globalKey);
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
@@ -381,9 +381,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
 
   //----------------- set font family of text -----------------
   void _setFamily(String fontFamily) {
-    setState(() {
-      meme.memeTextStyle.fontFamily = fontFamily;
-    });
+    setState(() => meme.memeTextStyle.fontFamily = fontFamily);
   }
 
   //----------------- set text align from string -----------------
@@ -406,16 +404,12 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   }
 
   void _setAlignOnText(TextAlign align) {
-    setState(() {
-      meme.memeTextStyle.align = align;
-    });
+    setState(() =>meme.memeTextStyle.align = align);
   }
 
   //----------------- set max text size -----------------
   void _setMaxTextSize(double size) {
-    setState(() {
-      meme.memeTextStyle.maxFontSize = size;
-    });
+    setState(() => meme.memeTextStyle.maxFontSize = size);
   }
 
   //----------------- get align name -----------------
@@ -435,7 +429,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   //handle color change in picker
   void changeColor(Color color) => setState(() => _pickerColor = color);
 
-  void changePhoto(Photo photo) => setState(()=>meme.photo = photo);
+  void changePhoto(Photo photo) => setState(()=> meme.photo = photo);
 
   //----------------- get font weight button widget -----------------
   Widget _getFontWeightButton(String title, Function handler, int actual) =>

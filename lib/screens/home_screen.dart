@@ -136,7 +136,7 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            ListView.builder(
+           memes.length> 0 ? ListView.builder(
               itemBuilder: (context, index) => ChangeNotifierProvider.value(
                 value: memes[index],
                 child: MemeCard(),
@@ -145,7 +145,7 @@ class HomeScreen extends StatelessWidget {
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-            )
+            ):SizedBox(height: 150,child:Center(child: Text("No memes available already",style: Theme.of(context).textTheme.headline3)))
           ],
         ),
       ),

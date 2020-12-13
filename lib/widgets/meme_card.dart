@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class MemeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final meme = Provider.of<Meme>(context,listen:false);
+    final meme = Provider.of<Meme>(context, listen: false);
     final screenHeight = MediaQuery.of(context).size.height -
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom;
@@ -19,30 +19,38 @@ class MemeCard extends StatelessWidget {
       child: Stack(
         children: [
           ClipRRect(
-            child: Image.network(
-              meme.photo.url,
-              width: double.infinity,
-              fit: BoxFit.fill,
-              height: double.infinity,
-            ),
+            child: Image.network(meme.photo.url,
+                width: double.infinity,
+                fit: BoxFit.fill,
+                height: double.infinity, loadingBuilder:
+                    (_, Widget child, ImageChunkEvent loadingProgress) {
+              if (loadingProgress == null) {
+                return child;
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.white,
+                  ),
+                );
+              }
+            }),
             borderRadius: BorderRadius.circular(10),
           ),
           Align(
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 15, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Container(
                 width: double.infinity,
                 child: AutoSizeText(
                   meme.topText,
-                  textAlign:  meme.memeTextStyle.align,
+                  textAlign: meme.memeTextStyle.align,
                   maxLines: 3,
                   softWrap: true,
                   style: TextStyle(
-                      color:  meme.memeTextStyle.color,
-                      fontSize:  meme.memeTextStyle.maxFontSize,
-                      fontWeight:  meme.memeTextStyle.weight,
-                      fontFamily:  meme.memeTextStyle.fontFamily),
+                      color: meme.memeTextStyle.color,
+                      fontSize: meme.memeTextStyle.maxFontSize,
+                      fontWeight: meme.memeTextStyle.weight,
+                      fontFamily: meme.memeTextStyle.fontFamily),
                 ),
               ),
             ),
@@ -50,8 +58,7 @@ class MemeCard extends StatelessWidget {
           ),
           Align(
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 15, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Container(
                 width: double.infinity,
                 child: AutoSizeText(
