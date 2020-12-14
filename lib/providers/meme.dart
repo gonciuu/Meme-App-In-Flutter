@@ -5,17 +5,16 @@ import '../models/meme_text.dart';
 import '../models/photo.dart';
 
 class Meme with ChangeNotifier {
-  final String id;
+  String id;
   Photo photo;
   String topText;
   String bottomText;
   MemeText memeTextStyle = MemeText();
 
-  Meme(
-      {this.id, this.bottomText, this.topText, this.photo, this.memeTextStyle});
+
+  Meme({this.id, this.bottomText, this.topText, this.photo, this.memeTextStyle});
 
   Map<String, dynamic> toMap() => {
-        "id": id,
         "photo": {
           "name": photo.name,
           "url": photo.url,
@@ -31,8 +30,8 @@ class Meme with ChangeNotifier {
         },
       };
 
-  Meme fromMap(Map<String, dynamic> map) => Meme(
-      id: map['id'],
+  Meme fromMap(Map<String, dynamic> map, String memeId) => Meme(
+      id: memeId,
       bottomText: map['bottomText'],
       topText: map['topText'],
       photo: Photo(map['photo']['name'], map['photo']['url']),

@@ -20,7 +20,8 @@ class Memes with ChangeNotifier{
   Future<void> addMeme(Meme meme,BuildContext context) async {
     try{
       showDialog(context: context,builder: (context) => consts.getLoadingDialog(context, 'Sharing...'));
-      await database.addMeme(meme);
+      final Response response = await database.addMeme(meme);
+      meme.id = json.decode(response.body)['name'];
       _memes.add(meme);
       notifyListeners();
       Navigator.of(context).pop();
@@ -35,7 +36,7 @@ class Memes with ChangeNotifier{
       Response response = await database.fetchMemes();
       final data = json.decode(response.body) as Map<String, dynamic>;
       _memes.clear();
-      data.forEach((memeId, memeData) => _memes.add(Meme().fromMap(memeData)));
+      data.forEach((memeId, memeData) => _memes.add(Meme().fromMap(memeData,memeId)));
       notifyListeners();
     }catch(e){
       throw e;
