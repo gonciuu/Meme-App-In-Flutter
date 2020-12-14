@@ -29,4 +29,12 @@ class Meme with ChangeNotifier{
     },
   };
 
+  Meme fromMap(Map<String,dynamic> map) => Meme(
+    id: map['id'],
+    bottomText: map['bottomText'],
+    topText: map['topText'],
+    photo: Photo(map['photo']['name'],map['photo']['url']),
+    memeTextStyle: MemeText()
+  );
+
 }

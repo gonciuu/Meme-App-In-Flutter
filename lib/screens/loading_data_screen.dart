@@ -1,6 +1,6 @@
-import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import '../providers/memes.dart';
 import '../widgets/consts.dart';
 import '../providers/photos.dart';
 import 'package:provider/provider.dart';
@@ -18,12 +18,16 @@ class _LoadingDataScreenState extends State<LoadingDataScreen> {
 
   @override
   void initState() {
-    Future.delayed(
-        Duration.zero,
-        () => Provider.of<Photos>(context, listen: false)
-            .getPhotosFromWeb()
+    Future.delayed(Duration.zero,() =>
+    Provider.of<Photos>(context, listen: false)
+        .getPhotosFromWeb()
+        .then((_) => Provider.of<Memes>(context, listen: false)
+            .fetchMemes()
             .then((_) => Navigator.of(context).pushReplacementNamed('/'))
-            .catchError((e)=> _scaffoldKey.currentState.showSnackBar(consts.getSnackBar(e.toString()))));
+            .catchError((e) => _scaffoldKey.currentState
+                .showSnackBar(consts.getSnackBar(e.toString()))))
+        .catchError((e) => _scaffoldKey.currentState
+            .showSnackBar(consts.getSnackBar(e.toString()))));
     super.initState();
   }
 

@@ -32,7 +32,6 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   GlobalKey _globalKey = GlobalKey();
   int _chosenWeightButton = 1;
   Color _pickerColor = Color(0xff98FF54);
-
   final _bottomTextFocus = FocusNode();
 
   @override
