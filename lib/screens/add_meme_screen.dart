@@ -378,7 +378,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                             style: theme.textTheme.headline3
                                 .copyWith(color: theme.primaryColor),
                           ),
-                          onPressed: () async =>memes.addMeme(meme),
+                          onPressed: () async => memes.addMeme(meme, context).catchError((e) => Scaffold.of(context).showSnackBar(consts.getSnackBar(e.toString()))),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(7.0)),
                           color: Colors.white,

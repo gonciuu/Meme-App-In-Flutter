@@ -45,23 +45,7 @@ class SaveMeme {
       showDialog(
           barrierDismissible: false,
           context: context,
-          builder: (context) => AlertDialog(
-                backgroundColor: Theme.of(context).primaryColor,
-                content: Row(
-                  children: [
-                    const CircularProgressIndicator(
-                      backgroundColor: Colors.white,
-                    ),const SizedBox(width: 20),      //saving progress dialog
-                    Text(
-                      'Saving image...',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3
-                          .copyWith(fontSize: 16.0),
-                    )
-                  ],
-                ),
-              ));
+          builder: (context) => consts.getLoadingDialog(context, 'Saving image...'));
       final RenderRepaintBoundary boundary =
           globalKey.currentContext.findRenderObject();
       final ui.Image image = await boundary.toImage(pixelRatio: 4.0);
@@ -73,7 +57,6 @@ class SaveMeme {
         Scaffold.of(context).showSnackBar(consts.getSnackBar("Saved"));
        else
         Scaffold.of(context).showSnackBar(consts.getSnackBar("Something went wrong! $result"));
-
       Navigator.of(context).pop();
     } catch (e) {
       Navigator.of(context).pop();
