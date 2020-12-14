@@ -1,11 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:memix/providers/memes.dart';
+import '../providers/memes.dart';
 import 'package:provider/provider.dart';
 import '../others/save_meme.dart';
 import '../models/photo.dart';
@@ -21,8 +20,12 @@ class AddMemeScreen extends StatefulWidget {
 }
 
 class _AddMemeScreenState extends State<AddMemeScreen> {
-
-  final Meme meme = Meme(id: "xd",bottomText: "",topText: "",photo: null, memeTextStyle: MemeText());
+  final Meme meme = Meme(
+      id: "xd",
+      bottomText: "",
+      topText: "",
+      photo: null,
+      memeTextStyle: MemeText());
   final consts = Consts();
   final _saveMeme = SaveMeme();
 
@@ -31,7 +34,6 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   Color _pickerColor = Color(0xff98FF54);
 
   final _bottomTextFocus = FocusNode();
-
 
   @override
   void initState() {
@@ -48,7 +50,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
     return SingleChildScrollView(
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: () => _bottomTextFocus.hasFocus ? _bottomTextFocus.unfocus() : null,
+        onTap: () =>
+            _bottomTextFocus.hasFocus ? _bottomTextFocus.unfocus() : null,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
           child: Form(
@@ -69,82 +72,97 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20))),backgroundColor: Theme.of(context).accentColor),
+                              topRight: Radius.circular(20))),
+                      backgroundColor: Theme.of(context).accentColor),
                   child: Container(
-                    decoration: meme.photo == null ? BoxDecoration(border: Border.all(color: Colors.white,width: 3.0), borderRadius: BorderRadius.circular(10.0)):null,
+                    decoration: meme.photo == null
+                        ? BoxDecoration(
+                            border: Border.all(color: Colors.white, width: 3.0),
+                            borderRadius: BorderRadius.circular(10.0))
+                        : null,
                     width: double.infinity,
                     height: deviceHeight / 3,
-                    child:meme.photo == null ? Center(child: ColorizeAnimatedTextKit(
-                      text: [
-                        "Click to choose photo",
-                      ],
-                      textStyle: Theme.of(context).textTheme.headline3,
-                      colors: [
-                        Colors.white,
-                        Colors.white54,
-                        Colors.white30,
-                        Colors.white10,
-                      ],
-                      textAlign: TextAlign.start,
-                    speed: Duration(milliseconds: 200),repeatForever: true,)
-                    ) : RepaintBoundary(
-                      key: _globalKey,
-                      child: Stack(
-                        children: [
-                          ClipRRect(
-                            child: Image.network(
-                              meme.photo.url,
-                              width: double.infinity,
-                              fit: BoxFit.fill,
-                              height: double.infinity,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          Align(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Container(
-                                width: double.infinity,
-                                child: AutoSizeText(
-                                  meme.topText,
-                                  textAlign:  meme.memeTextStyle.align,
-                                  maxLines: 3,
-                                  softWrap: true,
-                                  style: TextStyle(
-                                      color:  meme.memeTextStyle.color,
-                                      fontSize:  meme.memeTextStyle.maxFontSize,
-                                      fontWeight:  meme.memeTextStyle.weight,
-                                      fontFamily:  meme.memeTextStyle.fontFamily),
+                    child: meme.photo == null
+                        ? Center(
+                            child: ColorizeAnimatedTextKit(
+                            text: [
+                              "Click to choose photo",
+                            ],
+                            textStyle: Theme.of(context).textTheme.headline3,
+                            colors: [
+                              Colors.white,
+                              Colors.white54,
+                              Colors.white30,
+                              Colors.white10,
+                            ],
+                            textAlign: TextAlign.start,
+                            speed: Duration(milliseconds: 200),
+                            repeatForever: true,
+                          ))
+                        : RepaintBoundary(
+                            key: _globalKey,
+                            child: Stack(
+                              children: [
+                                ClipRRect(
+                                  child: Image.network(
+                                    meme.photo.url,
+                                    width: double.infinity,
+                                    fit: BoxFit.fill,
+                                    height: double.infinity,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                              ),
-                            ),
-                            alignment: Alignment.topCenter,
-                          ),
-                          Align(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Container(
-                                width: double.infinity,
-                                child: AutoSizeText(
-                                  meme.bottomText,
-                                  textAlign: meme.memeTextStyle.align,
-                                  maxLines: 3,
-                                  softWrap: true,
-                                  style: TextStyle(
-                                      color: meme.memeTextStyle.color,
-                                      fontSize: meme.memeTextStyle.maxFontSize,
-                                      fontWeight: meme.memeTextStyle.weight,
-                                      fontFamily: meme.memeTextStyle.fontFamily),
+                                Align(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 10),
+                                    child: Container(
+                                      width: double.infinity,
+                                      child: AutoSizeText(
+                                        meme.topText,
+                                        textAlign: meme.memeTextStyle.align,
+                                        maxLines: 3,
+                                        softWrap: true,
+                                        style: TextStyle(
+                                            color: meme.memeTextStyle.color,
+                                            fontSize:
+                                                meme.memeTextStyle.maxFontSize,
+                                            fontWeight:
+                                                meme.memeTextStyle.weight,
+                                            fontFamily:
+                                                meme.memeTextStyle.fontFamily),
+                                      ),
+                                    ),
+                                  ),
+                                  alignment: Alignment.topCenter,
                                 ),
-                              ),
+                                Align(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 10),
+                                    child: Container(
+                                      width: double.infinity,
+                                      child: AutoSizeText(
+                                        meme.bottomText,
+                                        textAlign: meme.memeTextStyle.align,
+                                        maxLines: 3,
+                                        softWrap: true,
+                                        style: TextStyle(
+                                            color: meme.memeTextStyle.color,
+                                            fontSize:
+                                                meme.memeTextStyle.maxFontSize,
+                                            fontWeight:
+                                                meme.memeTextStyle.weight,
+                                            fontFamily:
+                                                meme.memeTextStyle.fontFamily),
+                                      ),
+                                    ),
+                                  ),
+                                  alignment: Alignment.bottomCenter,
+                                )
+                              ],
                             ),
-                            alignment: Alignment.bottomCenter,
-                          )
-                        ],
-                      ),
-                    ),
+                          ),
                   ),
                 ),
                 const SizedBox(
@@ -153,17 +171,18 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                 TextFormField(
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 20.0),
                       hintText: 'Enter Top Text',
-                      hintStyle:
-                          theme.textTheme.headline6.copyWith(color: Colors.grey),
+                      hintStyle: theme.textTheme.headline6
+                          .copyWith(color: Colors.grey),
                       focusedBorder: consts.border,
                       enabledBorder: consts.border.copyWith(
                           borderSide: BorderSide(color: Colors.grey[600]))),
                   style: theme.textTheme.headline6,
-                  onChanged: (val) => setState(() =>  meme.topText = val),
-                  onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_bottomTextFocus),
+                  onChanged: (val) => setState(() => meme.topText = val),
+                  onFieldSubmitted: (_) =>
+                      FocusScope.of(context).requestFocus(_bottomTextFocus),
                 ),
                 const SizedBox(
                   height: 20,
@@ -172,17 +191,17 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                   focusNode: _bottomTextFocus,
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 20.0),
                       hintText: 'Enter Bottom Text',
-                      hintStyle:
-                          theme.textTheme.headline6.copyWith(color: Colors.grey),
+                      hintStyle: theme.textTheme.headline6
+                          .copyWith(color: Colors.grey),
                       focusedBorder: consts.border,
                       enabledBorder: consts.border.copyWith(
                           borderSide: BorderSide(color: Colors.grey[600]))),
                   style: theme.textTheme.headline6,
                   onChanged: (val) => setState(() => meme.bottomText = val),
-                  onEditingComplete:()=>_bottomTextFocus.unfocus(),
+                  onEditingComplete: () => _bottomTextFocus.unfocus(),
                 ),
                 SizedBox(
                   height: 30,
@@ -199,7 +218,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                   child: Container(
                     width: 70,
                     height: 70,
-                    color:  meme.memeTextStyle.color,
+                    color: meme.memeTextStyle.color,
                   ),
                   onTap: () {
                     showDialog(
@@ -211,7 +230,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                         title: const Text('Pick a color!'),
                         content: SingleChildScrollView(
                           child: ColorPicker(
-                            pickerColor:  meme.memeTextStyle.color,
+                            pickerColor: meme.memeTextStyle.color,
                             onColorChanged: changeColor,
                             showLabel: false,
                             pickerAreaHeightPercent: 1,
@@ -247,7 +266,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                   height: 10,
                 ),
                 Slider(
-                  value:  meme.memeTextStyle.maxFontSize,
+                  value: meme.memeTextStyle.maxFontSize,
                   max: 100,
                   min: 10,
                   onChanged: (val) => _setMaxTextSize(val),
@@ -328,13 +347,13 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                     SizedBox(
                       width: 10,
                     ),
-                    _getDropdown(
-                        'Lato', 'Poppins', 'Coda', _setFamily,  meme.memeTextStyle.fontFamily),
+                    _getDropdown('Lato', 'Poppins', 'Coda', _setFamily,
+                        meme.memeTextStyle.fontFamily),
                     SizedBox(
                       width: 20,
                     ),
-                    _getDropdown(
-                        'left', 'center', 'right', _setTextAlign, _textAlignName),
+                    _getDropdown('left', 'center', 'right', _setTextAlign,
+                        _textAlignName),
                     SizedBox(
                       width: 10,
                     ),
@@ -343,25 +362,53 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                 SizedBox(
                   height: 50,
                 ),
-                Container(
-                  width: double.infinity,
-                  child: Consumer<Memes>(
-                    builder: (_,memes,__) => FlatButton(
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      child: Text(
-                        "Create Meme",
-                        style: theme.textTheme.headline3
-                            .copyWith(color: theme.primaryColor),
-                      ),
-                      onPressed: () async{
-                        memes.addMeme(meme);
-                        await _saveMeme.requestPermission(context, _globalKey);
-                      },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                      color: Colors.white,
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 10,
                     ),
-                  ),
+                    Expanded(
+                      child: Consumer<Memes>(
+                        builder: (_, memes, __) => FlatButton(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 10),
+                          child: AutoSizeText(
+                            "Share Meme",
+                            maxLines: 1,
+                            style: theme.textTheme.headline3
+                                .copyWith(color: theme.primaryColor),
+                          ),
+                          onPressed: () async =>memes.addMeme(meme),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7.0)),
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                      child:  FlatButton(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 10),
+                          child: AutoSizeText(
+                            "Gallery Export",
+                            maxLines: 1,
+                            style: theme.textTheme.headline3
+                                .copyWith(color: theme.primaryColor),
+                          ),
+                          onPressed: () async => await _saveMeme.requestPermission(context, _globalKey)
+                        ,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7.0)),
+                          color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                  ],
                 )
               ],
             ),
@@ -404,7 +451,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   }
 
   void _setAlignOnText(TextAlign align) {
-    setState(() =>meme.memeTextStyle.align = align);
+    setState(() => meme.memeTextStyle.align = align);
   }
 
   //----------------- set max text size -----------------
@@ -414,7 +461,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
 
   //----------------- get align name -----------------
   String get _textAlignName {
-    switch ( meme.memeTextStyle.align) {
+    switch (meme.memeTextStyle.align) {
       case TextAlign.center:
         return "center";
       case TextAlign.left:
@@ -429,7 +476,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
   //handle color change in picker
   void changeColor(Color color) => setState(() => _pickerColor = color);
 
-  void changePhoto(Photo photo) => setState(()=> meme.photo = photo);
+  void changePhoto(Photo photo) => setState(() => meme.photo = photo);
 
   //----------------- get font weight button widget -----------------
   Widget _getFontWeightButton(String title, Function handler, int actual) =>

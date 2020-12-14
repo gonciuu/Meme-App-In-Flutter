@@ -14,7 +14,7 @@ class MemeCard extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20.0),
-      height: screenHeight / 2.2,
+      height: screenHeight / 2.3,
       width: double.infinity,
       child: Stack(
         children: [
