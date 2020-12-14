@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import '../database/database.dart';
 import 'meme.dart';
 
 class Memes with ChangeNotifier{
@@ -8,7 +9,8 @@ class Memes with ChangeNotifier{
 
   List<Meme> get memes => [..._memes];
 
-  void addMeme(Meme meme){
+  Future<void> addMeme(Meme meme) async {
+    Database().addMeme(meme);
     _memes.add(meme);
     notifyListeners();
     print(_memes);
