@@ -13,7 +13,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
   final consts = Consts();
   var isLogin = true;
-
+  final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -22,21 +22,34 @@ class _AuthScreenState extends State<AuthScreen> {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 60),
+            padding: EdgeInsets.only(left: 40, right: 40, top: 70),
             child: Form(
               key: _form,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AutoSizeText(
-                    "Welcome back!\nLogin to start",
-                    maxLines: 2,
+                    "Welcome back!",
+                    maxLines: 1,
                     style: theme.textTheme.headline1,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  AutoSizeText(
+                    " ${isLogin ? "Login" : "Register"} to start 😎",
+                    maxLines: 1,
+                    style: theme.textTheme.headline1.copyWith(fontSize: 32.0),
                   ),
                   SizedBox(
                     height: 50,
                   ),
                   TextFormField(
+                    validator: (val) =>
+                    !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                        .hasMatch(val)
+                        ? "Enter correct email"
+                        : null,
                     keyboardType: TextInputType.emailAddress,
                     style: theme.textTheme.headline6,
                     cursorColor: Colors.white24,
@@ -52,6 +65,8 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                   SizedBox(height: 15),
                   TextFormField(
+                    controller: _passwordController,
+                    validator: (val) => val.length<6 ? "Enter 6 character password at least" :null,
                     keyboardType: TextInputType.text,
                     obscureText: true,
                     style: theme.textTheme.headline6,
@@ -67,53 +82,58 @@ class _AuthScreenState extends State<AuthScreen> {
                         border: consts.filledBorder),
                   ),
                   SizedBox(height: 15),
-                  if(!isLogin) TextFormField(
-                    keyboardType: TextInputType.text,
-                    obscureText: true,
-                    style: theme.textTheme.headline6,
-                    cursorColor: Colors.white24,
-                    decoration: InputDecoration(
-                        hintText: 'Confirm Password',
-                        hintStyle: theme.textTheme.headline6
-                            .copyWith(color: Colors.white54),
-                        contentPadding:
-                        EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-                        fillColor: theme.accentColor,
-                        filled: true,
-                        border: consts.filledBorder),
-                  ),
-                  SizedBox( height: !isLogin ? 30:15),
+                  if (!isLogin)
+                    TextFormField(
+                      validator: (val) => _passwordController.text != val  ? "Passwords don't match" :null,
+                      keyboardType: TextInputType.text,
+                      obscureText: true,
+                      style: theme.textTheme.headline6,
+                      cursorColor: Colors.white24,
+                      decoration: InputDecoration(
+                          hintText: 'Confirm Password',
+                          hintStyle: theme.textTheme.headline6
+                              .copyWith(color: Colors.white54),
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 25, vertical: 20),
+                          fillColor: theme.accentColor,
+                          filled: true,
+                          border: consts.filledBorder),
+                    ),
+                  SizedBox(height: !isLogin ? 30 : 15),
                   Container(
                     width: double.infinity,
                     child: FlatButton(
                       padding: EdgeInsets.symmetric(vertical: 18),
-                      child: Text( isLogin ? "Log in" : "Register",
+                      child: Text(isLogin ? "Log in" : "Register",
                           style: theme.textTheme.headline6.copyWith(
                               color: theme.primaryColor,
                               fontWeight: FontWeight.w700)),
-                      onPressed: () {},
+                      onPressed: () => _form.currentState.validate(),
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
                     ),
                   ),
-                  Align(
-                    child: GestureDetector(
-                      onTap: () => setState(() => isLogin = !isLogin),
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 20, top: 10,bottom: 10,left: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        right: 20, top: 10, bottom: 10, left: 20),
+                    child: Align(
+                      child: GestureDetector(
+                        onTap: () => setState(() => isLogin = !isLogin),
                         child: Text(
                           isLogin ? "Sing Up" : "Sign In",
                           style: TextStyle(color: Colors.white, shadows: [
-                            Shadow(
-                                color: Colors.white38, offset: Offset(1.0, 1.0)),
-                            Shadow(
-                                color: Colors.white24, offset: Offset(2.0, 2.0))
+                            const Shadow(
+                                color: Colors.white38,
+                                offset: const Offset(1.0, 1.0)),
+                            const Shadow(
+                                color: Colors.white24,
+                                offset: const Offset(2.0, 2.0))
                           ]),
                         ),
                       ),
+                      alignment: Alignment.centerRight,
                     ),
-                    alignment: Alignment.centerRight,
                   )
                 ],
               ),
