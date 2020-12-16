@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:memix/models/auth_ex.dart';
 import 'package:memix/models/network_ex.dart';
 
 class Auth with ChangeNotifier {
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> signUp(String email, String password) async {

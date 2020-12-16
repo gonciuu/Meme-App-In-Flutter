@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:memix/widgets/consts.dart';
+import '../providers/auth.dart';
+import '../widgets/consts.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -11,9 +11,24 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
-  final consts = Consts();
-  var isLogin = true;
+  final _consts = Consts();
+  final _auth = Auth();
   final _passwordController = TextEditingController();
+
+  final Map<String, String> _userData = {"email": "", "password": ""};
+
+  var isLogin = true;
+
+  Future<void> _saveForm() async {
+    if (!_form.currentState.validate()) return;
+    _form.currentState.save();
+    if (isLogin) {
+      
+    } else {
+      await _auth.signUp(_userData['email'], _userData['password']);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -45,28 +60,30 @@ class _AuthScreenState extends State<AuthScreen> {
                     height: 50,
                   ),
                   TextFormField(
-                    validator: (val) =>
-                    !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-                        .hasMatch(val)
-                        ? "Enter correct email"
-                        : null,
-                    keyboardType: TextInputType.emailAddress,
-                    style: theme.textTheme.headline6,
-                    cursorColor: Colors.white24,
-                    decoration: InputDecoration(
-                        hintText: 'Email Address',
-                        hintStyle: theme.textTheme.headline6
-                            .copyWith(color: Colors.white54),
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-                        fillColor: theme.accentColor,
-                        filled: true,
-                        border: consts.filledBorder),
-                  ),
+                      validator: (val) =>
+                          !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                                  .hasMatch(val)
+                              ? "Enter correct email"
+                              : null,
+                      keyboardType: TextInputType.emailAddress,
+                      style: theme.textTheme.headline6,
+                      cursorColor: Colors.white24,
+                      decoration: InputDecoration(
+                          hintText: 'Email Address',
+                          hintStyle: theme.textTheme.headline6
+                              .copyWith(color: Colors.white54),
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 25, vertical: 20),
+                          fillColor: theme.accentColor,
+                          filled: true,
+                          border: _consts.filledBorder),
+                      onSaved: (val) => _userData['email'] = val),
                   SizedBox(height: 15),
                   TextFormField(
                     controller: _passwordController,
-                    validator: (val) => val.length<6 ? "Enter 6 character password at least" :null,
+                    validator: (val) => val.length < 6
+                        ? "Enter 6 character password at least"
+                        : null,
                     keyboardType: TextInputType.text,
                     obscureText: true,
                     style: theme.textTheme.headline6,
@@ -79,12 +96,15 @@ class _AuthScreenState extends State<AuthScreen> {
                             EdgeInsets.symmetric(horizontal: 25, vertical: 20),
                         fillColor: theme.accentColor,
                         filled: true,
-                        border: consts.filledBorder),
+                        border: _consts.filledBorder),
+                    onSaved: (val) => _userData['password'] = val,
                   ),
                   SizedBox(height: 15),
                   if (!isLogin)
                     TextFormField(
-                      validator: (val) => _passwordController.text != val  ? "Passwords don't match" :null,
+                      validator: (val) => _passwordController.text != val
+                          ? "Passwords don't match"
+                          : null,
                       keyboardType: TextInputType.text,
                       obscureText: true,
                       style: theme.textTheme.headline6,
@@ -97,7 +117,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               horizontal: 25, vertical: 20),
                           fillColor: theme.accentColor,
                           filled: true,
-                          border: consts.filledBorder),
+                          border: _consts.filledBorder),
                     ),
                   SizedBox(height: !isLogin ? 30 : 15),
                   Container(
@@ -108,7 +128,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           style: theme.textTheme.headline6.copyWith(
                               color: theme.primaryColor,
                               fontWeight: FontWeight.w700)),
-                      onPressed: () => _form.currentState.validate(),
+                      onPressed: _saveForm,
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),

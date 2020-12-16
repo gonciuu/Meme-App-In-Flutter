@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import './screens/auth_screen.dart';
 import './providers/memes.dart';
@@ -8,7 +9,9 @@ import './screens/add_meme_screen.dart';
 import './screens/home_screen.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
