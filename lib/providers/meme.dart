@@ -10,9 +10,15 @@ class Meme with ChangeNotifier {
   String topText;
   String bottomText;
   MemeText memeTextStyle = MemeText();
+  List<String> usersLiked;
 
-
-  Meme({this.id, this.bottomText, this.topText, this.photo, this.memeTextStyle});
+  Meme(
+      {this.id,
+      this.bottomText,
+      this.topText,
+      this.photo,
+      this.memeTextStyle,
+      this.usersLiked});
 
   Map<String, dynamic> toMap() => {
         "photo": {
@@ -28,6 +34,7 @@ class Meme with ChangeNotifier {
           "weight": memeTextStyle.weight.toString(),
           "maxFontSize": memeTextStyle.maxFontSize,
         },
+        "usersLiked": usersLiked
       };
 
   Meme fromMap(Map<String, dynamic> map, String memeId) => Meme(
@@ -40,7 +47,12 @@ class Meme with ChangeNotifier {
           color: Color(map['memeTextStyle']['color']),
           fontFamily: map['memeTextStyle']['fontFamily'],
           maxFontSize: map['memeTextStyle']['maxFontSize'],
-          weight: textWeightFromString(map['memeTextStyle']['weight'])));
+          weight: textWeightFromString(map['memeTextStyle']['weight'])),
+      usersLiked: map['usersLiked'] == null
+          ? []
+          : (map['usersLiked'] as List<dynamic>)
+              .map((e) => e.toString())
+              .toList());
 
   TextAlign textAlignFromString(String textAlignText) {
     switch (textAlignText) {
@@ -72,5 +84,12 @@ class Meme with ChangeNotifier {
       default:
         return FontWeight.w900;
     }
+  }
+
+  bool checkMemeFav(String userId) => usersLiked.contains(userId);
+
+  void toggleFavourite(String userId){
+    usersLiked.contains(userId) ? usersLiked.remove(userId) : usersLiked.add(userId);
+    notifyListeners();
   }
 }

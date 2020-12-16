@@ -17,7 +17,7 @@ class _MemeCardState extends State<MemeCard> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 300),
       vsync: this,
     );
     _animation = CurvedAnimation(
@@ -40,9 +40,17 @@ class _MemeCardState extends State<MemeCard> with TickerProviderStateMixin {
         MediaQuery.of(context).padding.bottom;
 
     return GestureDetector(
-      onDoubleTap: () => _controller.forward(),
+      onDoubleTap: () {
+        meme.toggleFavourite("XDD");
+        if(meme.checkMemeFav("XDD")){
+          _controller.forward();
+        }else{
+          _controller.reverse();
+        }
+        print(meme.usersLiked);
+      },
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 20.0),
+        margin: const EdgeInsets.symmetric(vertical: 20.0),
         height: screenHeight / 2.3,
         width: double.infinity,
         child: Stack(
@@ -63,7 +71,7 @@ class _MemeCardState extends State<MemeCard> with TickerProviderStateMixin {
                   );
                 }
               }),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius:BorderRadius.circular(10),
             ),
             Align(
               child: Padding(

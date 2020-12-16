@@ -25,7 +25,8 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
       bottomText: "",
       topText: "",
       photo: null,
-      memeTextStyle: MemeText());
+      memeTextStyle: MemeText(),
+      usersLiked: []);
   final consts = Consts();
   final _saveMeme = SaveMeme();
 
