@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './screens/auth_screen.dart';
 import './providers/memes.dart';
 import './providers/photos.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
           ),
           initialRoute: LoadingDataScreen.routeName,
           routes: {
-            '/': (context) => HomePage(),
+            '/': (context) => AuthScreen(),
             LoadingDataScreen.routeName: (context) => LoadingDataScreen()
           }),
     );

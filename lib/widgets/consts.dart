@@ -7,6 +7,10 @@ class Consts {
       borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(color: Colors.white, width: 1.0));
 
+
+  final OutlineInputBorder filledBorder = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(10.0),
+  borderSide: const BorderSide(width: 0.0));
   //----------------| Get basic snackbar just with text |-----------------
   SnackBar getSnackBar(String content) => SnackBar(
         backgroundColor: Color.fromARGB(255, 25, 23, 32),
