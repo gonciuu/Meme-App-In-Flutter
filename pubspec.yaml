@@ -36,6 +36,7 @@ dependencies:
   animated_text_kit: ^2.5.4
   image_gallery_saver: ^1.6.7
   permission_handler: ^5.0.1+1
+  firebase_auth: ^0.18.4+1
 dev_dependencies:
   flutter_test:
     sdk: flutter
