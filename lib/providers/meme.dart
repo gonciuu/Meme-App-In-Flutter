@@ -1,6 +1,10 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:memix/models/auth_ex.dart';
+import 'package:memix/models/network_ex.dart';
 import '../models/meme_text.dart';
 import '../models/photo.dart';
 
@@ -88,8 +92,24 @@ class Meme with ChangeNotifier {
 
   bool checkMemeFav(String userId) => usersLiked.contains(userId);
 
-  void toggleFavourite(String userId){
-    usersLiked.contains(userId) ? usersLiked.remove(userId) : usersLiked.add(userId);
+  Future<void> toggleFavourite(String userId) async {
+    final bool isAdd = usersLiked.contains(userId);
+    isAdd ? usersLiked.remove(userId) : usersLiked.add(userId);
+    try {
+      final url = 'https://shop-app-3a54e-default-rtdb.firebaseio.com/memes/$id.json';
+      final result = await patch(url, body: json.encode({"usersLiked": usersLiked}));
+      print(result.statusCode);
+      if(result.statusCode>=400)
+        handleEx(isAdd, userId);
+      notifyListeners();
+    } catch (e) {
+      handleEx(isAdd, userId);
+    }
+  }
+
+  void handleEx(bool isAdd, String userId){
+    isAdd ? usersLiked.add(userId) :usersLiked.remove(userId);
     notifyListeners();
+    throw NetworkEx(Exception("XD"));
   }
 }

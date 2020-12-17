@@ -1,10 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:memix/providers/meme.dart';
-import 'package:memix/providers/memes.dart';
-import 'package:memix/widgets/meme_card.dart';
+import '../providers/meme.dart';
+import '../providers/memes.dart';
+import '../widgets/meme_card.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth.dart';
 
@@ -16,10 +14,6 @@ class ProfileScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final List<Meme> likedMemes =
         Provider.of<Memes>(context).getLikedMemes(_auth.uid);
-    likedMemes.add(Provider.of<Memes>(context).memes[0]);
-    likedMemes.add(Provider.of<Memes>(context).memes[0]);
-    likedMemes.add(Provider.of<Memes>(context).memes[0]);
-    likedMemes.add(Provider.of<Memes>(context).memes[0]);
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(top: 70, left: 25, right: 25),

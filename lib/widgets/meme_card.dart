@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../providers/auth.dart';
 import '../providers/meme.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +13,9 @@ class _MemeCardState extends State<MemeCard> with TickerProviderStateMixin {
   AnimationController _controller;
   Animation<double> _animation;
 
+  final uid = Auth().uid;
+
+
   @override
   void initState() {
     super.initState();
@@ -24,7 +27,13 @@ class _MemeCardState extends State<MemeCard> with TickerProviderStateMixin {
       parent: _controller,
       curve: Curves.fastOutSlowIn,
     );
+    final meme = Provider.of<Meme>(context, listen: false);
+    showAnim(meme.checkMemeFav(uid));
   }
+
+
+  void showAnim(bool isFav) => isFav ? _controller.forward() : _controller.reverse();
+
 
   @override
   void dispose() {
@@ -34,20 +43,15 @@ class _MemeCardState extends State<MemeCard> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final meme = Provider.of<Meme>(context, listen: false);
+    final meme = Provider.of<Meme>(context);
     final screenHeight = MediaQuery.of(context).size.height -
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom;
 
     return GestureDetector(
       onDoubleTap: () {
-        meme.toggleFavourite("XDD");
-        if(meme.checkMemeFav("XDD")){
-          _controller.forward();
-        }else{
-          _controller.reverse();
-        }
-        print(meme.usersLiked);
+        meme.toggleFavourite(uid).catchError((e)=> showAnim(meme.checkMemeFav(uid)));
+        showAnim(meme.checkMemeFav(uid));
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 20.0),
