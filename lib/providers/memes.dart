@@ -31,7 +31,7 @@ class Memes with ChangeNotifier{
     }
   }
 
-  Future <void> fetchMemes() async{
+  Future<void> fetchMemes() async{
     try{
       Response response = await database.fetchMemes();
       final data = json.decode(response.body) as Map<String, dynamic>;
@@ -42,6 +42,9 @@ class Memes with ChangeNotifier{
       throw e;
     }
   }
+
+  List<Meme> getLikedMemes(String userId)  => _memes.where((meme) => meme.usersLiked.contains(userId)).toList();
+
 
 
 }

@@ -49,5 +49,6 @@ class Auth {
   }
 
   String get email => _auth.currentUser!=null ? _auth.currentUser.email : "";
+  String get uid => _auth.currentUser!=null ? _auth.currentUser.uid : "";
 
 }
