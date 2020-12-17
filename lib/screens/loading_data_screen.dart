@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import '../screens/wrapper.dart';
 import '../providers/memes.dart';
 import '../widgets/consts.dart';
 import '../providers/photos.dart';
@@ -23,7 +24,7 @@ class _LoadingDataScreenState extends State<LoadingDataScreen> {
         .getPhotosFromWeb()
         .then((_) => Provider.of<Memes>(context, listen: false)
             .fetchMemes()
-            .then((_) => Navigator.of(context).pushReplacementNamed('/'))
+            .then((_) => Navigator.of(context).pushReplacementNamed(Wrapper.routeName))
             .catchError((e) => _scaffoldKey.currentState
                 .showSnackBar(consts.getSnackBar(e.toString()))))
         .catchError((e) => _scaffoldKey.currentState

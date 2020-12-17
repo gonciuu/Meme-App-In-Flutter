@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:memix/screens/wrapper.dart';
 import './screens/auth_screen.dart';
 import './providers/memes.dart';
 import './providers/photos.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
           initialRoute: LoadingDataScreen.routeName,
           routes: {
             '/': (context) => AuthScreen(),
+            Wrapper.routeName : (context) => Wrapper(),
             LoadingDataScreen.routeName: (context) => LoadingDataScreen()
           }),
     );
