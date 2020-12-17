@@ -1,6 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import '../screens/wrapper.dart';
+import '../wrapper.dart';
 import '../providers/memes.dart';
 import '../widgets/consts.dart';
 import '../providers/photos.dart';

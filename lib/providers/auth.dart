@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:memix/models/auth_ex.dart';
 import 'package:memix/models/network_ex.dart';
 
-class Auth with ChangeNotifier {
+class Auth {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -40,5 +40,14 @@ class Auth with ChangeNotifier {
 
   Stream<User> get user => _auth.authStateChanges();
 
+  Future<void> signOut () async{
+    try{
+      await _auth.signOut();
+    }catch(e){
+      throw NetworkEx(e);
+    }
+  }
+
+  String get email => _auth.currentUser!=null ? _auth.currentUser.email : "";
 
 }
