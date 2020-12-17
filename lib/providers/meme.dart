@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:memix/models/auth_ex.dart';
 import 'package:memix/models/network_ex.dart';
 import '../models/meme_text.dart';
 import '../models/photo.dart';
@@ -100,16 +99,16 @@ class Meme with ChangeNotifier {
       final result = await patch(url, body: json.encode({"usersLiked": usersLiked}));
       print(result.statusCode);
       if(result.statusCode>=400)
-        handleEx(isAdd, userId);
+        handleEx(isAdd, userId,Exception("Firebase error handled"));
       notifyListeners();
     } catch (e) {
-      handleEx(isAdd, userId);
+      handleEx(isAdd, userId,e);
     }
   }
 
-  void handleEx(bool isAdd, String userId){
+  void handleEx(bool isAdd, String userId,Exception e){
     isAdd ? usersLiked.add(userId) :usersLiked.remove(userId);
     notifyListeners();
-    throw NetworkEx(Exception("XD"));
+    throw NetworkEx(e);
   }
 }

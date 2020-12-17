@@ -3,12 +3,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import '../providers/auth.dart';
 import '../models/network_ex.dart';
 import '../widgets/consts.dart';
 import '../database/database.dart';
 import './meme.dart';
 
 class Memes with ChangeNotifier{
+
+  final _auth = Auth();
 
   List<Meme> _memes = [];
 
@@ -43,7 +46,13 @@ class Memes with ChangeNotifier{
     }
   }
 
-  List<Meme> getLikedMemes(String userId)  => _memes.where((meme) => meme.usersLiked.contains(userId)).toList();
+
+  List<Meme> get likedMemes  => _memes.where((meme) => meme.usersLiked.contains(_auth.uid)).toList();
+  int get likedMemesCount => _memes.where((meme) => meme.usersLiked.contains(_auth.uid)).toList().length;
+
+
+  void refreshState() => notifyListeners();
+
 
 
 

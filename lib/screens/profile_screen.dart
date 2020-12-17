@@ -13,7 +13,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final List<Meme> likedMemes =
-        Provider.of<Memes>(context).getLikedMemes(_auth.uid);
+        Provider.of<Memes>(context).likedMemes;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(top: 70, left: 25, right: 25),

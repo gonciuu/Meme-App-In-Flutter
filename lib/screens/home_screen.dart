@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../providers/auth.dart';
 import '../widgets/consts.dart';
 import '../providers/memes.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
@@ -11,10 +12,11 @@ enum FilterOptions { MostPopular, Latest, OnlyFavourites }
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final memes = Provider.of<Memes>(context).memes;
+    final memesProvider = Provider.of<Memes>(context);
+    final int count = memesProvider.likedMemesCount;
     return RefreshIndicator(
       displacement: 100.0,
-      onRefresh: () async => Provider.of<Memes>(context, listen: false)
+      onRefresh: () async => memesProvider
           .fetchMemes()
           .catchError((e) => Scaffold.of(context).showSnackBar(Consts().getSnackBar("Error : $e"))),
       child: Padding(
@@ -55,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                           width: 10.0,
                         ),
                         Text(
-                          "222",
+                          "$count",
                           style: Theme.of(context)
                               .textTheme
                               .headline3
@@ -145,14 +147,14 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              memes.length > 0
+              memesProvider.memes.length > 0
                   ? ListView.builder(
                       itemBuilder: (context, index) =>
                           ChangeNotifierProvider.value(
-                            value: memes[index],
+                            value: memesProvider.memes[index],
                             child: MemeCard(),
                           ),
-                      itemCount: memes.length,
+                      itemCount: memesProvider.memes.length,
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics())
