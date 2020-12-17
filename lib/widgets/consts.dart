@@ -13,7 +13,7 @@ class Consts {
   borderSide: const BorderSide(width: 0.0));
   //----------------| Get basic snackbar just with text |-----------------
   SnackBar getSnackBar(String content) => SnackBar(
-        backgroundColor: Color.fromARGB(255, 25, 23, 32),
+        backgroundColor: Color.fromARGB(255, 43, 39, 51),
         duration: const Duration(seconds: 3),
         content: Text(
           content,

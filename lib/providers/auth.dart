@@ -9,7 +9,7 @@ class Auth {
 
   Future<void> signUp(String email, String password) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
+      return await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch(e){
       if (e.code == 'weak-password') {
@@ -25,7 +25,7 @@ class Auth {
 
   Future<void> signIn(String email, String password) async {
     try{
-      _auth.signInWithEmailAndPassword(email: email, password: password);
+      return _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         throw AuthEx('No user found for that email.');
