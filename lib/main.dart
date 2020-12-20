@@ -1,16 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import './screens/search_screen.dart';
 import './providers/main_screen.dart';
 import './widgets/app_drawer.dart';
-import './screens/profile_screen.dart';
 import './wrapper.dart';
 import './screens/auth_screen.dart';
 import './providers/memes.dart';
 import './providers/photos.dart';
 import 'package:provider/provider.dart';
 import './screens/loading_data_screen.dart';
-import './screens/add_meme_screen.dart';
-import './screens/home_screen.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 
 void main() async {
@@ -62,7 +60,8 @@ class MyApp extends StatelessWidget {
           routes: {
             '/': (context) => AuthScreen(),
             Wrapper.routeName: (context) => Wrapper(),
-            LoadingDataScreen.routeName: (context) => LoadingDataScreen()
+            LoadingDataScreen.routeName: (context) => LoadingDataScreen(),
+            SearchScreen.routeName: (context) => SearchScreen()
           }),
     );
   }

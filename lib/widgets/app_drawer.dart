@@ -82,7 +82,7 @@ class AppDrawer extends StatelessWidget {
                         .textTheme
                         .headline6
                         .copyWith(fontWeight: FontWeight.w700)),
-                subtitle: Text("Show All memes bymost popular",
+                subtitle: Text("Show All memes by most popular",
                     style: Theme.of(context)
                         .textTheme
                         .headline6

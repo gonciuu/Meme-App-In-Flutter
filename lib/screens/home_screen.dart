@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:memix/providers/auth.dart';
+import '../screens/search_screen.dart';
 import '../providers/meme.dart';
 import '../widgets/consts.dart';
 import '../providers/memes.dart';
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   IconButton(
                     icon: Icon(OMIcons.search, size: 32, color: Colors.white),
-                    onPressed: () {},
+                    onPressed: () => Navigator.of(context).pushNamed(SearchScreen.routeName)
                   )
                 ],
               ),

@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:memix/models/auth_ex.dart';
 import 'package:memix/models/network_ex.dart';
 

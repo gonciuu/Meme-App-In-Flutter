@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +52,6 @@ class _MemeCardState extends State<MemeCard> with TickerProviderStateMixin {
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom;
 
-    print("XD");
     return GestureDetector(
       onDoubleTap: () {
         meme.toggleFavourite(uid).catchError((e){

@@ -5,7 +5,6 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:memix/models/alert_dialog_action.dart';
 import 'package:memix/widgets/consts.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
