@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:memix/models/alert_dialog_action.dart';
+import '../widgets/consts.dart';
 import '../providers/meme.dart';
 import '../providers/memes.dart';
 import '../widgets/meme_card.dart';
@@ -8,12 +10,12 @@ import '../providers/auth.dart';
 
 class ProfileScreen extends StatelessWidget {
   final _auth = Auth();
+  final _consts = Consts();
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final List<Meme> likedMemes =
-        Provider.of<Memes>(context).likedMemes;
+    final List<Meme> likedMemes = Provider.of<Memes>(context).likedMemes;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(top: 70, left: 25, right: 25),
@@ -32,13 +34,29 @@ class ProfileScreen extends StatelessWidget {
                 height: 20,
               ),
               FlatButton(
-                padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 40),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 17, horizontal: 40),
                 child: Text(
                   "Sign Out",
                   style: theme.textTheme.headline6
                       .copyWith(color: theme.primaryColor),
                 ),
-                onPressed: () => _auth.signOut().catchError((e) => print(e)),
+                onPressed: () => showDialog(
+                    context: context,
+                    builder: (context) => _consts.getAlertDialog(
+                        "Are you sure?",
+                        "Are you sure to sign out from the app?",
+                        [
+                          AlertDialogAction(
+                              () => Navigator.of(context).pop(), "Cancel"),
+                          AlertDialogAction(
+                              () {
+                                _auth.signOut().catchError((e) => print(e));
+                                Navigator.of(context).pop();
+                              } ,
+                              "Confirm")
+                        ],
+                        context)),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
                 color: Colors.white,
@@ -72,7 +90,8 @@ class ProfileScreen extends StatelessWidget {
                     size: 30,
                   )
                 ],
-              ),const SizedBox(
+              ),
+              const SizedBox(
                 height: 15,
               ),
               ListView.builder(

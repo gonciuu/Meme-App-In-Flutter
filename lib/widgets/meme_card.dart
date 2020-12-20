@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:memix/providers/memes.dart';
@@ -29,8 +31,7 @@ class _MemeCardState extends State<MemeCard> with TickerProviderStateMixin {
       parent: _controller,
       curve: Curves.fastOutSlowIn,
     );
-    final meme = Provider.of<Meme>(context, listen: false);
-    showAnim(meme.checkMemeFav(uid));
+
   }
 
 
@@ -45,11 +46,14 @@ class _MemeCardState extends State<MemeCard> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final meme = Provider.of<Meme>(context,listen: false);
+
+    final meme = Provider.of<Meme>(context);
+    showAnim(meme.checkMemeFav(uid));
     final screenHeight = MediaQuery.of(context).size.height -
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom;
 
+    print("XD");
     return GestureDetector(
       onDoubleTap: () {
         meme.toggleFavourite(uid).catchError((e){

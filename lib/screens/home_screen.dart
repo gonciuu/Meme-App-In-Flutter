@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../providers/auth.dart';
+import 'package:memix/providers/auth.dart';
+import '../providers/meme.dart';
 import '../widgets/consts.dart';
 import '../providers/memes.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
@@ -9,11 +10,40 @@ import '../widgets/meme_card.dart';
 
 enum FilterOptions { MostPopular, Latest, OnlyFavourites }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  FilterOptions chooseFilter = FilterOptions.MostPopular;
+  List<Meme> memes = [];
+  @override
+  void initState() {
+    super.initState();
+    memes = Provider.of<Memes>(context,listen : false).memes;
+  }
+
+
+  void switchMemes(FilterOptions val){
+    final memesProvider = Provider.of<Memes>(context,listen: false);
+
+    setState(() {
+      chooseFilter = val;
+      switch(chooseFilter){
+        case FilterOptions.MostPopular : memes = memesProvider.memes;/*memesProvider.memes..sort((a,b)=>a.usersLiked.length.compareTo(b.usersLiked.length));*/break;
+        case FilterOptions.Latest : memes = memesProvider.likedMemes;break;
+        case FilterOptions.OnlyFavourites : memes = memesProvider.likedMemes;break;
+        default : memes = memesProvider.memes;
+      }
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
     final memesProvider = Provider.of<Memes>(context);
-    final int count = memesProvider.likedMemesCount;
+
     return RefreshIndicator(
       displacement: 100.0,
       onRefresh: () async => memesProvider
@@ -57,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                           width: 10.0,
                         ),
                         Text(
-                          "$count",
+                          "${memesProvider.likedMemesCount}",
                           style: Theme.of(context)
                               .textTheme
                               .headline3
@@ -89,6 +119,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   PopupMenuButton(
+                    onSelected: (val) => switchMemes(val),
                     color: Theme.of(context).primaryColor,
                     icon: Icon(
                       OMIcons.filterList,
@@ -147,14 +178,14 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              memesProvider.memes.length > 0
+              memes.length > 0
                   ? ListView.builder(
                       itemBuilder: (context, index) =>
                           ChangeNotifierProvider.value(
-                            value: memesProvider.memes[index],
+                            value: memes[index],
                             child: MemeCard(),
                           ),
-                      itemCount: memesProvider.memes.length,
+                      itemCount: memes.length,
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics())
