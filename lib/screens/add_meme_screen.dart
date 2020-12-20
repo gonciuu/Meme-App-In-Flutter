@@ -380,8 +380,13 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                                 .copyWith(color: theme.primaryColor),
                           ),
                           onPressed: () async {
-                            meme.time = DateTime.now().millisecondsSinceEpoch;
-                            memes.addMeme(meme, context).catchError((e) => Scaffold.of(context).showSnackBar(consts.getSnackBar(e.toString())));
+                            if(meme.photo == null){
+                              Scaffold.of(context).showSnackBar(consts.getSnackBar("Cannot share meme with empty photo"));
+                            }else{
+                              meme.time = DateTime.now().millisecondsSinceEpoch;
+                              memes.addMeme(meme, context).catchError((e) => Scaffold.of(context).showSnackBar(consts.getSnackBar(e.toString())));
+                            }
+
                           } ,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(7.0)),
@@ -402,7 +407,13 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                             style: theme.textTheme.headline3
                                 .copyWith(color: theme.primaryColor),
                           ),
-                          onPressed: () async => await _saveMeme.requestPermission(context, _globalKey)
+                          onPressed: () async {
+                            if(meme.photo == null){
+                              Scaffold.of(context).showSnackBar(consts.getSnackBar("Cannot save meme with empty photo"));
+                            }else{
+                              await _saveMeme.requestPermission(context, _globalKey);
+                            }
+                          }
                         ,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(7.0)),

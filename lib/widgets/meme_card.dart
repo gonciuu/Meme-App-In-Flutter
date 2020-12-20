@@ -39,8 +39,8 @@ class _MemeCardState extends State<MemeCard> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -82,7 +82,7 @@ class _MemeCardState extends State<MemeCard> with TickerProviderStateMixin {
                   );
                 }
               }),
-              borderRadius:BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10),
             ),
             Align(
               child: Padding(
