@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import './widgets/app_drawer.dart';
 import './screens/profile_screen.dart';
 import './wrapper.dart';
 import './screens/auth_screen.dart';
@@ -22,41 +23,43 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_)=> Photos()),
-        ChangeNotifierProvider(create: (_)=> Memes())
+        ChangeNotifierProvider(create: (_) => Photos()),
+        ChangeNotifierProvider(create: (_) => Memes())
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Memes App',
           theme: ThemeData(
-            textTheme: ThemeData.light().textTheme.copyWith(
-                  headline1: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white),
-                  headline2: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white),
-                  headline3: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white),
-                  headline6: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white),
-                ),
-            backgroundColor: Color.fromARGB(255, 43, 39, 51),
-            fontFamily: 'Lato',
-            primaryColor: Color.fromARGB(255, 25, 23, 32),
-            accentColor: Color.fromARGB(255, 43, 39, 51),
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
+            dividerColor: Color.fromARGB(255, 73, 69, 81),
+
+              textTheme: ThemeData.light().textTheme.copyWith(
+                    headline1: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white),
+                    headline2: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white),
+                    headline3: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white),
+                    headline6: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white),
+                  ),
+              backgroundColor: Color.fromARGB(255, 43, 39, 51),
+              fontFamily: 'Lato',
+              primaryColor: Color.fromARGB(255, 25, 23, 32),
+              accentColor: Color.fromARGB(255, 43, 39, 51),
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+              canvasColor: Color.fromARGB(255, 43, 39, 51),),
           initialRoute: LoadingDataScreen.routeName,
           routes: {
             '/': (context) => AuthScreen(),
-            Wrapper.routeName : (context) => Wrapper(),
+            Wrapper.routeName: (context) => Wrapper(),
             LoadingDataScreen.routeName: (context) => LoadingDataScreen()
           }),
     );
@@ -69,17 +72,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _views = [
-    AddMemeScreen(),
-    HomeScreen(),
-    ProfileScreen()
-  ];
+  final _views = [AddMemeScreen(), HomeScreen(), ProfileScreen()];
   int _currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: Drawer(),
+        drawer: AppDrawer(),
         drawerEnableOpenDragGesture: true,
         bottomNavigationBar: Container(
           padding: EdgeInsets.symmetric(vertical: 7.0, horizontal: 5.0),
@@ -91,7 +90,8 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: IconButton(
                   icon: Icon(OMIcons.addBox,
-                      color: _currentIndex == 0 ? Colors.white : Colors.white30),
+                      color:
+                          _currentIndex == 0 ? Colors.white : Colors.white30),
                   onPressed: () => setState(() => _updateIndex(0)),
                   iconSize: 32.0,
                 ),
@@ -109,7 +109,8 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: IconButton(
                   icon: Icon(OMIcons.personOutline,
-                      color: _currentIndex == 2 ? Colors.white : Colors.white30),
+                      color:
+                          _currentIndex == 2 ? Colors.white : Colors.white30),
                   onPressed: () => setState(() => _updateIndex(2)),
                   iconSize: 32.0,
                 ),

@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 children: [
                   Text(
-                    "Popular Memes",
+                    chooseFilter== FilterOptions.MostPopular ? "Popular Memes" : chooseFilter== FilterOptions.Latest ? "Latest Memes" : "Only Favourites",
                     style: Theme.of(context)
                         .textTheme
                         .headline1
