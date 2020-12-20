@@ -39,7 +39,8 @@ class Memes with ChangeNotifier{
       Response response = await database.fetchMemes();
       final data = json.decode(response.body) as Map<String, dynamic>;
       _memes.clear();
-      data.forEach((memeId, memeData) => _memes.add(Meme().fromMap(memeData,memeId)));
+      if(data !=null && data.length>0)
+        data.forEach((memeId, memeData) => _memes.add(Meme().fromMap(memeData,memeId)));
       notifyListeners();
     }catch(e){
       throw e;

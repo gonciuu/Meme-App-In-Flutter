@@ -31,8 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       chooseFilter = val;
       switch(chooseFilter){
-        case FilterOptions.MostPopular : memes = memesProvider.memes;/*memesProvider.memes..sort((a,b)=>a.usersLiked.length.compareTo(b.usersLiked.length));*/break;
-        case FilterOptions.Latest : memes = memesProvider.likedMemes;break;
+        case FilterOptions.MostPopular : memes = memesProvider.memes..sort((a,b)=>b.usersLiked.length.compareTo(a.usersLiked.length));break;
+        case FilterOptions.Latest : memes = memesProvider.memes..sort((a,b)=>b.time.compareTo(a.time));break;
         case FilterOptions.OnlyFavourites : memes = memesProvider.likedMemes;break;
         default : memes = memesProvider.memes;
       }

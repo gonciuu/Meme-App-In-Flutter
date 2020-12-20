@@ -14,6 +14,7 @@ class Meme with ChangeNotifier {
   String bottomText;
   MemeText memeTextStyle = MemeText();
   List<String> usersLiked;
+  int time;
 
   Meme(
       {this.id,
@@ -21,7 +22,8 @@ class Meme with ChangeNotifier {
       this.topText,
       this.photo,
       this.memeTextStyle,
-      this.usersLiked});
+      this.usersLiked,
+      this.time});
 
   Map<String, dynamic> toMap() => {
         "photo": {
@@ -37,7 +39,8 @@ class Meme with ChangeNotifier {
           "weight": memeTextStyle.weight.toString(),
           "maxFontSize": memeTextStyle.maxFontSize,
         },
-        "usersLiked": usersLiked
+        "usersLiked": usersLiked,
+        "time": time
       };
 
   Meme fromMap(Map<String, dynamic> map, String memeId) => Meme(
@@ -55,7 +58,8 @@ class Meme with ChangeNotifier {
           ? []
           : (map['usersLiked'] as List<dynamic>)
               .map((e) => e.toString())
-              .toList());
+              .toList(),
+  time: map['time']);
 
   TextAlign textAlignFromString(String textAlignText) {
     switch (textAlignText) {
@@ -95,22 +99,22 @@ class Meme with ChangeNotifier {
     final bool isAdd = usersLiked.contains(userId);
     isAdd ? usersLiked.remove(userId) : usersLiked.add(userId);
     try {
-      final url = 'https://shop-app-3a54e-default-rtdb.firebaseio.com/memes/$id.json';
-      final result = await patch(url, body: json.encode({"usersLiked": usersLiked}));
+      final url =
+          'https://shop-app-3a54e-default-rtdb.firebaseio.com/memes/$id.json';
+      final result =
+          await patch(url, body: json.encode({"usersLiked": usersLiked}));
       print(result.statusCode);
-      if(result.statusCode>=400)
-        handleEx(isAdd, userId,Exception("Firebase error handled"));
+      if (result.statusCode >= 400)
+        handleEx(isAdd, userId, Exception("Firebase error handled"));
       notifyListeners();
     } catch (e) {
-      handleEx(isAdd, userId,e);
+      handleEx(isAdd, userId, e);
     }
   }
 
-  void handleEx(bool isAdd, String userId,Exception e){
-    isAdd ? usersLiked.add(userId) :usersLiked.remove(userId);
+  void handleEx(bool isAdd, String userId, Exception e) {
+    isAdd ? usersLiked.add(userId) : usersLiked.remove(userId);
     notifyListeners();
     throw NetworkEx(e);
   }
-
-
 }
