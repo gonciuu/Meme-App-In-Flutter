@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import './providers/main_screen.dart';
 import './widgets/app_drawer.dart';
 import './screens/profile_screen.dart';
 import './wrapper.dart';
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Photos()),
-        ChangeNotifierProvider(create: (_) => Memes())
+        ChangeNotifierProvider(create: (_) => Memes()),
+        ChangeNotifierProvider(create: (_) => MainScreen()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -72,11 +74,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _views = [AddMemeScreen(), HomeScreen(), ProfileScreen()];
-  int _currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
+    final mainScreenProvider = Provider.of<MainScreen>(context);
     return Scaffold(
         drawer: AppDrawer(),
         drawerEnableOpenDragGesture: true,
@@ -91,8 +92,8 @@ class _HomePageState extends State<HomePage> {
                 child: IconButton(
                   icon: Icon(OMIcons.addBox,
                       color:
-                          _currentIndex == 0 ? Colors.white : Colors.white30),
-                  onPressed: () => setState(() => _updateIndex(0)),
+                      mainScreenProvider.currentIndex == 0 ? Colors.white : Colors.white30),
+                  onPressed: () => setState(() => mainScreenProvider.changeIndex(0)),
                   iconSize: 32.0,
                 ),
               ),
@@ -100,9 +101,9 @@ class _HomePageState extends State<HomePage> {
                 child: IconButton(
                   icon: Icon(
                     OMIcons.image,
-                    color: _currentIndex == 1 ? Colors.white : Colors.white30,
+                    color: mainScreenProvider.currentIndex  == 1 ? Colors.white : Colors.white30,
                   ),
-                  onPressed: () => setState(() => _updateIndex(1)),
+                  onPressed: () => setState(() => mainScreenProvider.changeIndex(1)),
                   iconSize: 32.0,
                 ),
               ),
@@ -110,8 +111,8 @@ class _HomePageState extends State<HomePage> {
                 child: IconButton(
                   icon: Icon(OMIcons.personOutline,
                       color:
-                          _currentIndex == 2 ? Colors.white : Colors.white30),
-                  onPressed: () => setState(() => _updateIndex(2)),
+                      mainScreenProvider.currentIndex == 2 ? Colors.white : Colors.white30),
+                  onPressed: () => setState(() => mainScreenProvider.changeIndex(2)),
                   iconSize: 32.0,
                 ),
               )
@@ -119,8 +120,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         backgroundColor: Theme.of(context).backgroundColor,
-        body: SafeArea(child: _views.elementAt(_currentIndex)));
+        body: SafeArea(child: mainScreenProvider.currentView));
   }
 
-  void _updateIndex(int index) => _currentIndex = index;
 }
