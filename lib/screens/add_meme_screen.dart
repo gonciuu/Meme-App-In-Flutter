@@ -27,7 +27,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
       photo: null,
       memeTextStyle: MemeText(),
       usersLiked: [],
-  time: 0);
+      time: 0);
   final consts = Consts();
   final _saveMeme = SaveMeme();
 
@@ -224,7 +224,7 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                   onTap: () {
                     showDialog(
                       context: context,
-                      child: AlertDialog(
+                      builder: (context) => AlertDialog(
                         titleTextStyle:
                             theme.textTheme.headline3.copyWith(fontSize: 16.0),
                         backgroundColor: theme.primaryColor,
@@ -380,14 +380,17 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                                 .copyWith(color: theme.primaryColor),
                           ),
                           onPressed: () async {
-                            if(meme.photo == null){
-                              Scaffold.of(context).showSnackBar(consts.getSnackBar("Cannot share meme with empty photo"));
-                            }else{
+                            if (meme.photo == null) {
+                              Scaffold.of(context).showSnackBar(
+                                  consts.getSnackBar(
+                                      "Cannot share meme with empty photo"));
+                            } else {
                               meme.time = DateTime.now().millisecondsSinceEpoch;
-                              memes.addMeme(meme, context).catchError((e) => Scaffold.of(context).showSnackBar(consts.getSnackBar(e.toString())));
+                              memes.addMeme(meme, context).catchError((e) =>
+                                  Scaffold.of(context).showSnackBar(
+                                      consts.getSnackBar(e.toString())));
                             }
-
-                          } ,
+                          },
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(7.0)),
                           color: Colors.white,
@@ -398,26 +401,28 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
                       width: 20,
                     ),
                     Expanded(
-                      child:  FlatButton(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 10),
-                          child: AutoSizeText(
-                            "Gallery Export",
-                            maxLines: 1,
-                            style: theme.textTheme.headline3
-                                .copyWith(color: theme.primaryColor),
-                          ),
-                          onPressed: () async {
-                            if(meme.photo == null){
-                              Scaffold.of(context).showSnackBar(consts.getSnackBar("Cannot save meme with empty photo"));
-                            }else{
-                              await _saveMeme.requestPermission(context, _globalKey);
-                            }
+                      child: FlatButton(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                        child: AutoSizeText(
+                          "Gallery Export",
+                          maxLines: 1,
+                          style: theme.textTheme.headline3
+                              .copyWith(color: theme.primaryColor),
+                        ),
+                        onPressed: () async {
+                          if (meme.photo == null) {
+                            Scaffold.of(context).showSnackBar(
+                                consts.getSnackBar(
+                                    "Cannot save meme with empty photo"));
+                          } else {
+                            await _saveMeme.requestPermission(
+                                context, _globalKey);
                           }
-                        ,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(7.0)),
-                          color: Colors.white,
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(7.0)),
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(
@@ -555,6 +560,4 @@ class _AddMemeScreenState extends State<AddMemeScreen> {
           ),
         ),
       );
-
-
 }
